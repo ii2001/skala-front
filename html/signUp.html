@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SKALA 교육과정 학습을 위한 실습용 회원가입 정보를 입력하는 페이지입니다.">
+    <title>SKALA 회원가입</title>
+  </head>
+  <body>
+    <header>
+      <h1>SKALA 회원가입</h1>
+      <p>아래 안내에 따라 회원가입에 필요한 정보를 입력해 주세요.</p>
+    </header>
+    <main>
+      <form action="signUpResult.html" method="get" autocomplete="on">
+        <p>필수 입력 항목은 반드시 작성하거나 선택해야 합니다.</p>
+        <p><small>실습용 페이지이므로 민감한 실제 개인정보를 입력하지 마세요.</small></p>
+
+        <fieldset>
+          <legend>계정 정보</legend>
+          <p>
+            <label for="userId">아이디</label>
+            <input type="text" id="userId" name="userId" minlength="4" maxlength="15" required autocomplete="username" placeholder="4~15자 영문 또는 숫자" pattern="[A-Za-z0-9]+" title="4~15자의 영문 또는 숫자만 입력할 수 있습니다.">
+          </p>
+          <p>
+            <label for="userPassword">비밀번호</label>
+            <input type="password" id="userPassword" name="userPassword" minlength="8" maxlength="20" required autocomplete="new-password" placeholder="8~20자로 입력">
+            <small>실제로 사용하는 비밀번호는 입력하지 마세요.</small>
+          </p>
+          <p>
+            <label for="userEmail">이메일</label>
+            <input type="email" id="userEmail" name="userEmail" required autocomplete="email" placeholder="example@email.com">
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>개인 정보</legend>
+          <p>
+            <label for="userName">이름</label>
+            <input type="text" id="userName" name="userName" required autocomplete="name" placeholder="이름을 입력하세요">
+          </p>
+          <p>
+            <label for="birthDate">생년월일</label>
+            <input type="date" id="birthDate" name="birthDate" required>
+          </p>
+          <p>
+            <label for="phone">전화번호</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="010-1234-5678" pattern="010-[0-9]{4}-[0-9]{4}" title="010-1234-5678 형식으로 입력해 주세요.">
+          </p>
+          <p>성별</p>
+          <p>
+            <input type="radio" id="genderMale" name="gender" value="male">
+            <label for="genderMale">남성</label>
+            <input type="radio" id="genderFemale" name="gender" value="female">
+            <label for="genderFemale">여성</label>
+            <input type="radio" id="genderNone" name="gender" value="none" checked>
+            <label for="genderNone">선택하지 않음</label>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>교육 및 관심 정보</legend>
+          <p>
+            <label for="learningTrack">희망 학습 분야</label>
+            <select id="learningTrack" name="learningTrack" required>
+              <option value="" selected disabled>학습 분야를 선택하세요</option>
+              <option value="frontend">프론트엔드</option>
+              <option value="backend">백엔드</option>
+              <option value="database">데이터베이스</option>
+              <option value="cloud">클라우드</option>
+              <option value="ai">인공지능</option>
+            </select>
+          </p>
+          <p>관심 기술</p>
+          <p>
+            <input type="checkbox" id="interestHtml" name="interests" value="html">
+            <label for="interestHtml">HTML</label>
+            <input type="checkbox" id="interestCss" name="interests" value="css">
+            <label for="interestCss">CSS</label>
+            <input type="checkbox" id="interestJavaScript" name="interests" value="javascript">
+            <label for="interestJavaScript">JavaScript</label>
+            <input type="checkbox" id="interestGit" name="interests" value="git">
+            <label for="interestGit">Git</label>
+            <input type="checkbox" id="interestJava" name="interests" value="java">
+            <label for="interestJava">Java</label>
+            <input type="checkbox" id="interestPython" name="interests" value="python">
+            <label for="interestPython">Python</label>
+          </p>
+          <p>
+            <label for="experience">개발 경험</label>
+            <select id="experience" name="experience">
+              <option value="beginner">처음 시작</option>
+              <option value="under-six-months">6개월 미만</option>
+              <option value="six-to-twelve-months">6개월 이상 1년 미만</option>
+              <option value="over-one-year">1년 이상</option>
+            </select>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>자기소개</legend>
+          <p>
+            <label for="introduction">자기소개</label>
+            <textarea id="introduction" name="introduction" rows="6" cols="50" maxlength="300" placeholder="나를 표현하는 한 줄 소개 또는 가입 동기를 작성하세요."></textarea>
+            <small>최대 300자까지 작성할 수 있습니다.</small>
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>약관 동의</legend>
+          <p>
+            <input type="checkbox" id="termsAgreement" name="termsAgreement" value="agree" required>
+            <label for="termsAgreement">개인정보 수집 및 이용에 동의합니다. (필수)</label>
+          </p>
+          <p>
+            <input type="checkbox" id="marketingAgreement" name="marketingAgreement" value="agree">
+            <label for="marketingAgreement">교육 및 행사 안내 수신에 동의합니다. (선택)</label>
+          </p>
+        </fieldset>
+
+        <button type="submit">회원가입</button>
+        <button type="reset">다시 작성</button>
+      </form>
+    </main>
+    <footer>
+      <small>이 페이지는 HTML Form 실습용 회원가입 페이지입니다.</small>
+    </footer>
+  </body>
+</html>
