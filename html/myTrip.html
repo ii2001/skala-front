@@ -5,73 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="제주도의 자연과 음식, 여행 활동 및 추천 일정을 소개하는 여행 페이지입니다.">
     <title>나의 여행지 - 제주도</title>
+    <link rel="stylesheet" href="../css/style.css">
   </head>
   <body>
     <header>
       <h1>나의 여행지, 제주도</h1>
       <p>아름다운 자연 속에서 여유롭게 쉬며 다양한 풍경을 경험하고 싶어 제주도를 선택했습니다.</p>
+      <nav class="site-nav" aria-label="주요 페이지">
+        <ul class="nav-list">
+          <li><a href="index.html">메인</a></li>
+          <li><a href="holiday.html">휴일 일과</a></li>
+          <li><a href="myProfile.html">나의 소개</a></li>
+          <li><a href="myClass.html">강의 일정</a></li>
+          <li><a href="myTrip.html" aria-current="page">여행지</a></li>
+          <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+      </nav>
     </header>
-    <main>
+    <main class="site-main">
       <article>
-        <section>
-          <h2>제주도 소개</h2>
-          <p>제주도는 푸른 바다와 독특한 화산 지형, 곳곳에 자리한 오름이 어우러져 다채로운 자연을 만날 수 있는 섬입니다.</p>
-          <figure>
-            <img src="../media/images/trip-main.jpg" alt="푸른 제주 바다와 완만한 오름이 함께 펼쳐진 해안 풍경" loading="lazy">
-            <figcaption>바다와 오름이 조화를 이루는 제주도의 대표적인 자연 풍경</figcaption>
-          </figure>
-        </section>
+        <div class="trip-grid">
+          <section class="trip-card">
+            <h2>제주도 소개</h2>
+            <p>제주도는 푸른 바다와 독특한 화산 지형, 곳곳에 자리한 오름이 어우러져 다채로운 자연을 만날 수 있는 섬입니다.</p>
+            <figure>
+              <img src="../media/images/trip-main.jpg" alt="푸른 제주 바다와 완만한 오름이 함께 펼쳐진 해안 풍경" loading="lazy">
+              <figcaption>바다와 오름이 조화를 이루는 제주도의 대표적인 자연 풍경</figcaption>
+            </figure>
+          </section>
 
-        <section>
-          <h2>제주도에서 하고 싶은 일</h2>
-          <ul>
-            <li>성산일출봉에서 일출 보기</li>
-            <li>해안도로 드라이브하기</li>
-            <li>오름 산책하기</li>
-            <li>제주 음식 맛보기</li>
-            <li>바닷가에서 휴식하기</li>
-          </ul>
-        </section>
+          <section class="trip-card">
+            <h2>제주도에서 하고 싶은 일</h2>
+            <ul>
+              <li>성산일출봉에서 일출 보기</li>
+              <li>해안도로 드라이브하기</li>
+              <li>오름 산책하기</li>
+              <li>제주 음식 맛보기</li>
+              <li>바닷가에서 휴식하기</li>
+            </ul>
+          </section>
 
-        <section>
-          <h2>여행 사진</h2>
-          <figure>
-            <img src="../media/images/trip-food.jpg" alt="접시에 담긴 제주 향토 음식과 신선한 지역 식재료" loading="lazy">
-            <figcaption>제주의 특색 있는 식재료로 차린 향토 음식</figcaption>
-          </figure>
-          <figure>
-            <img src="../media/images/trip-view.jpg" alt="초록빛 들판 너머로 제주 오름과 맑은 하늘이 이어지는 풍경" loading="lazy">
-            <figcaption>제주의 초록빛 들판과 오름이 만든 평화로운 풍경</figcaption>
-          </figure>
-        </section>
+          <section class="trip-card">
+            <h2>여행 사진</h2>
+            <figure>
+              <img src="../media/images/trip-food.jpg" alt="접시에 담긴 제주 향토 음식과 신선한 지역 식재료" loading="lazy">
+              <figcaption>제주의 특색 있는 식재료로 차린 향토 음식</figcaption>
+            </figure>
+            <figure>
+              <img src="../media/images/trip-view.jpg" alt="초록빛 들판 너머로 제주 오름과 맑은 하늘이 이어지는 풍경" loading="lazy">
+              <figcaption>제주의 초록빛 들판과 오름이 만든 평화로운 풍경</figcaption>
+            </figure>
+          </section>
 
-        <section>
-          <h2>제주도의 소리</h2>
-          <p>잔잔한 파도와 바람이 어우러진 제주 바다의 소리를 들으며 여행의 분위기를 느껴 보세요.</p>
-          <audio controls preload="metadata">
-            <source src="../media/audio/trip-sound.mp3" type="audio/mpeg">
-            사용 중인 브라우저에서는 오디오 재생을 지원하지 않습니다.
-          </audio>
-        </section>
+          <section class="trip-card">
+            <h2>제주도의 소리</h2>
+            <p>잔잔한 파도와 바람이 어우러진 제주 바다의 소리를 들으며 여행의 분위기를 느껴 보세요.</p>
+            <audio controls preload="metadata">
+              <source src="../media/audio/trip-sound.mp3" type="audio/mpeg">
+              사용 중인 브라우저에서는 오디오 재생을 지원하지 않습니다.
+            </audio>
+          </section>
 
-        <section>
-          <h2>제주도 여행 영상</h2>
-          <p>제주도의 바다와 오름을 따라 이동하며 만나는 여행 풍경을 영상으로 감상해 보세요.</p>
-          <video controls preload="metadata">
-            <source src="../media/video/trip-video.mp4" type="video/mp4">
-            사용 중인 브라우저에서는 동영상 재생을 지원하지 않습니다.
-          </video>
-        </section>
+          <section class="trip-card">
+            <h2>제주도 여행 영상</h2>
+            <p>제주도의 바다와 오름을 따라 이동하며 만나는 여행 풍경을 영상으로 감상해 보세요.</p>
+            <video controls preload="metadata">
+              <source src="../media/video/trip-video.mp4" type="video/mp4">
+              사용 중인 브라우저에서는 동영상 재생을 지원하지 않습니다.
+            </video>
+          </section>
 
-        <section>
-          <h2>추천 여행 일정</h2>
-          <ol>
-            <li>아침에 성산일출봉 방문</li>
-            <li>점심에 제주 향토 음식 체험</li>
-            <li>오후에 해안도로 드라이브</li>
-            <li>저녁에 바닷가 산책</li>
-          </ol>
-        </section>
+          <section class="trip-card">
+            <h2>추천 여행 일정</h2>
+            <ol>
+              <li>아침에 성산일출봉 방문</li>
+              <li>점심에 제주 향토 음식 체험</li>
+              <li>오후에 해안도로 드라이브</li>
+              <li>저녁에 바닷가 산책</li>
+            </ol>
+          </section>
+        </div>
       </article>
 
       <aside>
@@ -94,7 +107,7 @@
         </ul>
       </nav>
     </main>
-    <footer>
+    <footer class="site-footer">
       <small>SKALA-FRONT HTML 심화 과제</small>
     </footer>
   </body>

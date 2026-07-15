@@ -3,26 +3,47 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SKALA HTML 과제에서 작성한 휴일 일과, 자기소개, 강의 일정, 여행지와 회원가입 페이지를 안내합니다.">
     <title>Welcome SKALA</title>
+    <link rel="stylesheet" href="../css/style.css">
   </head>
   <body>
     <header>
       <h1>환영인사</h1>
       <p>스칼라에 오신 것을 환영합니다.</p>
+      <nav class="site-nav" aria-label="주요 페이지">
+        <ul class="nav-list">
+          <li><a href="index.html" aria-current="page">메인</a></li>
+          <li><a href="holiday.html">휴일 일과</a></li>
+          <li><a href="myProfile.html">나의 소개</a></li>
+          <li><a href="myClass.html">강의 일정</a></li>
+          <li><a href="myTrip.html">여행지</a></li>
+          <li><a href="signUp.html">회원가입</a></li>
+        </ul>
+      </nav>
     </header>
-    <main>
-      <section>
-        <h2>페이지 바로가기</h2>
-        <nav aria-label="과제 페이지 바로가기">
-          <ul>
-            <li><a href="holiday.html">나의 휴일 일과</a></li>
-            <li><a href="myProfile.html">나의 프로필</a></li>
-            <li><a href="myClass.html">나의 강의 일정</a></li>
-          </ul>
-        </nav>
-      </section>
+    <main class="site-main">
+      <div class="portal-layout">
+        <section aria-labelledby="portal-heading">
+          <h2 id="portal-heading">페이지 바로가기</h2>
+          <nav aria-label="과제 페이지 바로가기">
+            <ul class="portal-grid">
+              <li><a class="portal-card" href="holiday.html">휴일 일과</a></li>
+              <li><a class="portal-card" href="myProfile.html">나의 소개</a></li>
+              <li><a class="portal-card" href="myClass.html">강의 일정</a></li>
+              <li><a class="portal-card" href="myTrip.html">여행지</a></li>
+              <li><a class="portal-card" href="signUp.html">회원가입</a></li>
+            </ul>
+          </nav>
+        </section>
+        <aside class="learning-status" aria-labelledby="learning-status-heading">
+          <h2 id="learning-status-heading">현재 학습 목표</h2>
+          <p>시맨틱 HTML로 각 페이지의 의미와 구조를 분명하게 구성하고 있습니다.</p>
+          <p>다음 단계에서는 공통 스타일을 적용해 반응형 웹 페이지로 발전시킬 예정입니다.</p>
+        </aside>
+      </div>
     </main>
-    <footer>
+    <footer class="site-footer">
       <small>SKALA-FRONT HTML 기초 과제</small>
     </footer>
   </body>
