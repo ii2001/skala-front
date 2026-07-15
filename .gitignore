@@ -1,0 +1,26 @@
+# 운영체제 생성 파일
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 에디터 및 IDE 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 개인용 AI 작업 지침
+AGENTS.md
+
+# 로그 파일
+*.log
+
+# 로컬 환경 변수
+.env
+.env.*
+!.env.example
+
+# 의존성 및 테스트 결과
+node_modules/
+coverage/
