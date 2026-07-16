@@ -13,10 +13,12 @@
   </head>
   <body class="page-trip">
     <a class="skip-link" href="#main-content">본문 바로가기</a>
-    <header class="site-header container">
-      <h1>나의 여행지, 제주도</h1>
-      <p>아름다운 자연 속에서 여유롭게 쉬며 다양한 풍경을 경험하고 싶어 제주도를 선택했습니다.</p>
-      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
+    <progress class="page-scroll-progress" value="0" max="100" aria-hidden="true"></progress>
+    <div class="floating-topbar container">
+      <a class="site-brand" href="index.html">
+        <strong>SKALA</strong>
+        <small>FRONT</small>
+      </a>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html">메인</a></li>
@@ -27,8 +29,13 @@
           <li><a href="signUp.html">폼 UI 데모</a></li>
         </ul>
       </nav>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
+    </div>
+    <header class="site-header container">
+      <h1>나의 여행지, 제주도</h1>
+      <p>아름다운 자연 속에서 여유롭게 쉬며 다양한 풍경을 경험하고 싶어 제주도를 선택했습니다.</p>
     </header>
-    <main class="site-main container" id="main-content">
+    <main class="site-main container" id="main-content" tabindex="-1">
       <article>
         <div class="trip-grid trip-grid--mosaic">
           <section class="trip-card trip-card--featured reveal">
@@ -132,5 +139,7 @@
     <footer class="site-footer container">
       <small>Multimedia Travel Project · SKALA Front-End Portfolio</small>
     </footer>
+    <button class="back-to-top" type="button" hidden>맨 위로</button>
+    <script src="../script/visualEffects.js" defer></script>
   </body>
 </html>

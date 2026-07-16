@@ -12,11 +12,12 @@
   </head>
   <body class="page-index">
     <a class="skip-link" href="#main-content">본문 바로가기</a>
-    <header class="site-header container portal-header">
-      <h1>환영인사</h1>
-      <p>스칼라에 오신 것을 환영합니다.</p>
-      <p>HTML, CSS, JavaScript로 구현한 프런트엔드 프로젝트와 인터랙티브 기능을 소개합니다.</p>
-      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
+    <progress class="page-scroll-progress" value="0" max="100" aria-hidden="true"></progress>
+    <div class="floating-topbar container">
+      <a class="site-brand" href="index.html">
+        <strong>SKALA</strong>
+        <small>FRONT</small>
+      </a>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html" aria-current="page">메인</a></li>
@@ -27,8 +28,20 @@
           <li><a href="signUp.html">폼 UI 데모</a></li>
         </ul>
       </nav>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
+    </div>
+    <header class="site-header container portal-header">
+      <p class="hero-eyebrow">배우고 만들며 성장하는 프런트엔드 포트폴리오</p>
+      <h1>환영인사</h1>
+      <p>스칼라에 오신 것을 환영합니다.</p>
+      <p>HTML, CSS, JavaScript로 구현한 프런트엔드 프로젝트와 인터랙티브 기능을 소개합니다.</p>
+      <ul class="hero-metrics" aria-label="포트폴리오 구성 요약">
+        <li><strong>7</strong><small>프로젝트 페이지</small></li>
+        <li><strong>12</strong><small>기능 스크립트</small></li>
+        <li><strong>22</strong><small>교육 주차</small></li>
+      </ul>
     </header>
-    <main class="site-main container" id="main-content">
+    <main class="site-main container" id="main-content" tabindex="-1">
       <div class="portal-layout">
         <div class="portal-primary">
           <section class="portal-projects" aria-labelledby="portal-heading">
@@ -36,31 +49,31 @@
             <nav aria-label="프로젝트 페이지 바로가기">
               <ul class="portal-grid">
                 <li>
-                  <a class="portal-card reveal-on-scroll" href="holiday.html">
+                  <a class="portal-card reveal-on-scroll reveal-left" href="holiday.html" data-card-number="01" data-tilt>
                     <strong>휴일 일과</strong>
                     <small>시간 요소와 체크리스트로 구성한 휴일 루틴</small>
                   </a>
                 </li>
                 <li>
-                  <a class="portal-card reveal-on-scroll" href="myProfile.html">
+                  <a class="portal-card reveal-on-scroll reveal-zoom" href="myProfile.html" data-card-number="02" data-tilt>
                     <strong>나의 소개</strong>
                     <small>학습 기술과 개발 목표를 담은 프로필</small>
                   </a>
                 </li>
                 <li>
-                  <a class="portal-card reveal-on-scroll" href="myClass.html">
+                  <a class="portal-card reveal-on-scroll reveal-right" href="myClass.html" data-card-number="03" data-tilt>
                     <strong>학습 일정</strong>
                     <small>SKALA 4반의 주차별 교육 일정</small>
                   </a>
                 </li>
                 <li>
-                  <a class="portal-card reveal-on-scroll" href="myTrip.html">
+                  <a class="portal-card reveal-on-scroll reveal-left" href="myTrip.html" data-card-number="04" data-tilt>
                     <strong>여행지</strong>
                     <small>이미지·오디오·영상으로 소개하는 제주도</small>
                   </a>
                 </li>
                 <li>
-                  <a class="portal-card reveal-on-scroll" href="signUp.html">
+                  <a class="portal-card reveal-on-scroll reveal-zoom" href="signUp.html" data-card-number="05" data-tilt>
                     <strong>폼 UI 데모</strong>
                     <small>HTML 유효성 검사를 활용한 회원가입 폼</small>
                   </a>
@@ -68,11 +81,11 @@
               </ul>
             </nav>
           </section>
-          <section class="javascript-practice reveal-on-scroll" aria-labelledby="javascript-practice-heading">
+          <section class="javascript-practice reveal-on-scroll reveal-left" aria-labelledby="javascript-practice-heading">
             <h2 id="javascript-practice-heading">JavaScript 미니 프로젝트</h2>
             <p>버튼을 눌러 숫자 맞추기, 성적 계산, 가방 목록 출력 기능을 직접 실행해 보세요.</p>
             <div class="practice-grid">
-              <article class="practice-card" aria-labelledby="up-down-heading">
+              <article class="practice-card" aria-labelledby="up-down-heading" data-tilt>
                 <h3 id="up-down-heading">Up-Down 숫자 맞추기</h3>
                 <p>1부터 50 사이의 숫자를 입력하고 Up과 Down 안내에 따라 정답을 맞혀 보세요.</p>
                 <button type="button" id="up-down-start" aria-controls="up-down-status">Up-Down 게임 시작하기</button>
@@ -80,7 +93,7 @@
                   게임을 시작하면 결과가 여기에 표시됩니다.
                 </div>
               </article>
-              <article class="practice-card" aria-labelledby="grade-heading">
+              <article class="practice-card" aria-labelledby="grade-heading" data-tilt>
                 <h3 id="grade-heading">성적 계산기</h3>
                 <p>HTML, CSS, JavaScript 점수를 입력해 총점, 평균, 등급과 합격 여부를 확인하세요.</p>
                 <button type="button" id="grade-start" aria-controls="grade-result">성적 계산 시작하기</button>
@@ -88,7 +101,7 @@
                   점수 입력을 마치면 계산 결과가 여기에 표시됩니다.
                 </div>
               </article>
-              <article class="practice-card" aria-labelledby="bag-heading">
+              <article class="practice-card" aria-labelledby="bag-heading" data-tilt>
                 <h3 id="bag-heading">내 가방 보기</h3>
                 <p>SKALA 개발 교육에 챙겨 다니는 소지품과 전체 수량을 목록으로 확인하세요.</p>
                 <button type="button" id="bag-show" aria-controls="bag-result">내 가방 내용 보기</button>
@@ -99,7 +112,7 @@
             </div>
           </section>
         </div>
-        <aside class="learning-status reveal-on-scroll" aria-labelledby="learning-status-heading">
+        <aside class="learning-status reveal-on-scroll reveal-right" aria-labelledby="learning-status-heading" data-tilt>
           <h2 id="learning-status-heading">현재 학습 목표</h2>
           <p>시맨틱 HTML과 반응형 CSS로 의미가 분명하고 다양한 화면에 대응하는 페이지를 구현했습니다.</p>
           <p>Vanilla JavaScript와 API 연동으로 인터랙티브 기능을 구현하고 웹 접근성을 함께 고려했습니다.</p>
@@ -125,6 +138,8 @@
     <footer class="site-footer container">
       <small>© 2026 SKALA Front-End Portfolio</small>
     </footer>
+    <button class="back-to-top" type="button" hidden>맨 위로</button>
+    <script src="../script/visualEffects.js" defer></script>
     <script src="../script/upDown.js" defer></script>
     <script src="../script/grade.js" defer></script>
     <script src="../script/bag.js" defer></script>

@@ -13,10 +13,12 @@
   </head>
   <body class="page-sign-up">
     <a class="skip-link" href="#main-content">본문 바로가기</a>
-    <header class="site-header container">
-      <h1>회원가입 UI 데모</h1>
-      <p>HTML 폼 요소와 브라우저 기본 유효성 검사를 구현한 UI 데모입니다. 입력한 정보는 실제 서버에 저장되지 않습니다.</p>
-      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
+    <progress class="page-scroll-progress" value="0" max="100" aria-hidden="true"></progress>
+    <div class="floating-topbar container">
+      <a class="site-brand" href="index.html">
+        <strong>SKALA</strong>
+        <small>FRONT</small>
+      </a>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html">메인</a></li>
@@ -27,8 +29,13 @@
           <li><a href="signUp.html" aria-current="page">폼 UI 데모</a></li>
         </ul>
       </nav>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
+    </div>
+    <header class="site-header container">
+      <h1>회원가입 UI 데모</h1>
+      <p>HTML 폼 요소와 브라우저 기본 유효성 검사를 구현한 UI 데모입니다. 입력한 정보는 실제 서버에 저장되지 않습니다.</p>
     </header>
-    <main class="site-main container" id="main-content">
+    <main class="site-main container" id="main-content" tabindex="-1">
       <form class="sign-up-form" action="signUpResult.html" method="get" autocomplete="on">
         <p>필수 입력 항목은 반드시 작성하거나 선택해야 합니다.</p>
         <p><small>이 데모는 GET 방식으로 입력값을 전달하며 실제 서버에 저장하지 않습니다. 실제 비밀번호나 민감한 개인정보를 입력하지 마세요.</small></p>
@@ -165,5 +172,7 @@
     <footer class="site-footer container">
       <small>HTML Form Demo · SKALA Front-End Portfolio</small>
     </footer>
+    <button class="back-to-top" type="button" hidden>맨 위로</button>
+    <script src="../script/visualEffects.js" defer></script>
   </body>
 </html>
