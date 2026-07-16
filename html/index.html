@@ -37,7 +37,7 @@
       <p>HTML, CSS, JavaScript로 구현한 프런트엔드 프로젝트와 인터랙티브 기능을 소개합니다.</p>
       <ul class="hero-metrics" aria-label="포트폴리오 구성 요약">
         <li><strong>7</strong><small>프로젝트 페이지</small></li>
-        <li><strong>12</strong><small>기능 스크립트</small></li>
+        <li><strong>13</strong><small>기능 스크립트</small></li>
         <li><strong>22</strong><small>교육 주차</small></li>
       </ul>
     </header>
@@ -117,7 +117,8 @@
           <p>시맨틱 HTML과 반응형 CSS로 의미가 분명하고 다양한 화면에 대응하는 페이지를 구현했습니다.</p>
           <p>Vanilla JavaScript와 API 연동으로 인터랙티브 기능을 구현하고 웹 접근성을 함께 고려했습니다.</p>
           <section class="weather-section" aria-labelledby="weather-heading">
-            <h3 id="weather-heading">실시간 날씨</h3>
+            <h3 id="weather-heading">현재 날씨</h3>
+            <p class="weather-description">도시 또는 현재 위치의 최신 모델 기반 날씨를 확인합니다.</p>
             <div class="weather-controls">
               <label for="city-select">날씨를 확인할 도시</label>
               <select id="city-select">
@@ -127,10 +128,15 @@
                 <option value="부산" data-latitude="35.1796" data-longitude="129.0756">부산</option>
                 <option value="제주" data-latitude="33.4996" data-longitude="126.5312">제주</option>
               </select>
+              <div class="weather-actions">
+                <button type="button" id="weather-location">내 위치 사용</button>
+                <button type="button" id="weather-refresh" disabled>날씨 새로고침</button>
+              </div>
             </div>
             <div class="weather-result" id="weather-box" aria-live="polite" aria-atomic="true" aria-busy="false">
-              <p>도시를 선택하면 현재 날씨를 확인할 수 있습니다.</p>
+              <p>도시를 선택하거나 내 위치 사용 버튼을 누르면 현재 날씨를 확인할 수 있습니다.</p>
             </div>
+            <p class="weather-update-note"><small>선택한 위치의 날씨는 10분마다 자동으로 갱신됩니다. Open-Meteo 모델 데이터이므로 실제 관측값과 차이가 날 수 있습니다.</small></p>
           </section>
         </aside>
       </div>

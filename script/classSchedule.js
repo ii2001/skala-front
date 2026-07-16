@@ -7,6 +7,14 @@ const scheduleCaption = document.getElementById("schedule-caption");
 const scheduleBody = document.getElementById("schedule-body");
 const scheduleWeekPosition = document.getElementById("schedule-week-position");
 const scheduleWeekTotal = document.getElementById("schedule-week-total");
+const scheduleNextTitle = document.getElementById("schedule-next-title");
+const scheduleNextDetail = document.getElementById("schedule-next-detail");
+const scheduleTodayButton = document.getElementById("schedule-today-button");
+const scheduleSearch = document.getElementById("schedule-search");
+const scheduleSearchStatus = document.getElementById("schedule-search-status");
+const scheduleSearchResults = document.getElementById("schedule-search-results");
+const scheduleDownloadButton = document.getElementById("schedule-download-button");
+const scheduleToolStatus = document.getElementById("schedule-tool-status");
 
 const scheduleKindLabels = {
   course: "수업",
@@ -70,6 +78,91 @@ function groupSchedulesByWeek(schedules) {
 function getMonthDay(date) {
   const [, month, day] = date.split("-");
   return `${month}.${day}`;
+}
+
+function formatScheduleDate(date) {
+  return new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long"
+  }).format(new Date(`${date}T00:00:00`));
+}
+
+function getNextDate(date) {
+  const nextDate = new Date(`${date}T00:00:00`);
+  nextDate.setDate(nextDate.getDate() + 1);
+  return getLocalDateString(nextDate);
+}
+
+function escapeCalendarText(value) {
+  return value
+    .replace(/\\/g, "\\\\")
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+
+function foldCalendarLine(line) {
+  const encoder = new TextEncoder();
+  const segments = [];
+  let segment = "";
+
+  for (const character of line) {
+    if (segment !== "" && encoder.encode(`${segment}${character}`).length > 75) {
+      segments.push(segment);
+      segment = ` ${character}`;
+    } else {
+      segment += character;
+    }
+  }
+
+  segments.push(segment);
+  return segments.join("\r\n");
+}
+
+function createCalendarContent() {
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//SKALA Front//Class 4 Schedule//KO",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "X-WR-CALNAME:SKALA 4기 4반 교육 일정"
+  ];
+
+  for (const schedule of classSchedule) {
+    const description = `${scheduleKindLabels[schedule.kind] ?? "일정"} · 담당 ${getInstructorText(schedule)}`;
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:skala-class4-${schedule.date}@skala-front.local`,
+      `DTSTAMP:${stamp}`,
+      `DTSTART;VALUE=DATE:${schedule.date.replaceAll("-", "")}`,
+      `DTEND;VALUE=DATE:${getNextDate(schedule.date).replaceAll("-", "")}`,
+      `SUMMARY:${escapeCalendarText(schedule.course)}`,
+      `DESCRIPTION:${escapeCalendarText(description)}`,
+      `LOCATION:${escapeCalendarText(classScheduleMeta.room)}`,
+      "END:VEVENT"
+    );
+  }
+
+  lines.push("END:VCALENDAR");
+  return `${lines.map(foldCalendarLine).join("\r\n")}\r\n`;
+}
+
+function downloadScheduleCalendar() {
+  const calendar = new Blob([createCalendarContent()], { type: "text/calendar;charset=utf-8" });
+  const downloadUrl = URL.createObjectURL(calendar);
+  const link = document.createElement("a");
+  link.href = downloadUrl;
+  link.download = "skala-class4-schedule.ics";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => {
+    URL.revokeObjectURL(downloadUrl);
+  }, 0);
 }
 
 function createWeekDay(schedule) {
@@ -148,6 +241,45 @@ function getInstructorText(schedule) {
   }
 
   return schedule.instructor === "" ? "원본 미기재" : schedule.instructor;
+}
+
+function getRelevantSchedule() {
+  const todaySchedule = classSchedule.find((schedule) => schedule.date === currentDate);
+
+  if (todaySchedule !== undefined) {
+    return { schedule: todaySchedule, isToday: true };
+  }
+
+  const nextSchedule = classSchedule.find((schedule) => schedule.date > currentDate);
+  return nextSchedule === undefined ? null : { schedule: nextSchedule, isToday: false };
+}
+
+function renderRelevantSchedule(relevantSchedule) {
+  if (scheduleNextTitle === null || scheduleNextDetail === null) {
+    return;
+  }
+
+  if (relevantSchedule === null) {
+    scheduleNextTitle.textContent = "전체 교육 과정이 종료되었습니다";
+    scheduleNextDetail.replaceChildren(
+      createTextElement("p", "22주 동안의 SKALA 4기 교육 일정을 모두 마쳤습니다.")
+    );
+    return;
+  }
+
+  const { schedule, isToday } = relevantSchedule;
+  const badge = createTextElement("span", scheduleKindLabels[schedule.kind] ?? "일정", "schedule-badge");
+  const date = createTextElement("time", formatScheduleDate(schedule.date));
+  const course = createTextElement("strong", schedule.course);
+  const meta = createTextElement(
+    "p",
+    `${schedule.week}주차 · ${classScheduleMeta.room} · 담당 ${getInstructorText(schedule)}`
+  );
+
+  scheduleNextTitle.textContent = isToday ? "오늘의 교육 일정" : "다음 교육 일정";
+  badge.dataset.kind = scheduleKindLabels[schedule.kind] === undefined ? "course" : schedule.kind;
+  date.dateTime = schedule.date;
+  scheduleNextDetail.replaceChildren(badge, date, course, meta);
 }
 
 function createScheduleRow(schedule, weekRowspan = 0) {
@@ -232,12 +364,19 @@ function initializeClassSchedule() {
     || scheduleBody === null
     || scheduleWeekPosition === null
     || scheduleWeekTotal === null
+    || !(scheduleTodayButton instanceof HTMLButtonElement)
+    || !(scheduleSearch instanceof HTMLInputElement)
+    || scheduleSearchStatus === null
+    || scheduleSearchResults === null
+    || !(scheduleDownloadButton instanceof HTMLButtonElement)
+    || scheduleToolStatus === null
   ) {
     return;
   }
 
   const weekGroups = groupSchedulesByWeek(classSchedule);
   const initialWeek = getInitialWeek();
+  const relevantSchedule = getRelevantSchedule();
   let activeWeek = null;
   let renderedWeek = null;
   let scrollFrame = 0;
@@ -252,6 +391,7 @@ function initializeClassSchedule() {
 
   scheduleWeekList.replaceChildren(...weekGroups.map(createWeekCard));
   scheduleWeekTotal.textContent = String(classScheduleMeta.totalWeeks);
+  renderRelevantSchedule(relevantSchedule);
 
   function getWeekCard(week) {
     return scheduleWeekList.querySelector(`[data-week="${week}"]`);
@@ -316,6 +456,87 @@ function initializeClassSchedule() {
       targetCard.focus({ preventScroll: true });
     }
   }
+
+  function renderSearchResults() {
+    const query = scheduleSearch.value.trim().normalize("NFKC").toLocaleLowerCase("ko-KR");
+
+    if (query === "") {
+      scheduleSearchResults.hidden = true;
+      scheduleSearchResults.replaceChildren();
+      scheduleSearchStatus.textContent = "검색어를 입력하면 22주 전체 일정에서 찾아드립니다.";
+      return;
+    }
+
+    const matchedSchedules = classSchedule.filter((schedule) => {
+      const searchableText = [
+        schedule.course,
+        schedule.instructor,
+        schedule.date,
+        `${schedule.week}주차`,
+        `${schedule.day}요일`,
+        scheduleKindLabels[schedule.kind] ?? ""
+      ].join(" ").normalize("NFKC").toLocaleLowerCase("ko-KR");
+      return searchableText.includes(query);
+    });
+    const visibleSchedules = matchedSchedules.slice(0, 10);
+    const results = document.createDocumentFragment();
+
+    for (const schedule of visibleSchedules) {
+      const item = document.createElement("li");
+      const button = document.createElement("button");
+      const date = createTextElement("span", `${schedule.week}주차 · ${formatScheduleDate(schedule.date)}`);
+      const course = createTextElement("strong", schedule.course);
+      const instructor = createTextElement("small", `담당 ${getInstructorText(schedule)}`);
+
+      button.type = "button";
+      button.className = "schedule-search-result";
+      button.dataset.week = String(schedule.week);
+      button.append(date, course, instructor);
+      item.append(button);
+      results.append(item);
+    }
+
+    scheduleSearchResults.replaceChildren(results);
+    scheduleSearchResults.hidden = visibleSchedules.length === 0;
+    scheduleSearchStatus.textContent = matchedSchedules.length === 0
+      ? `“${scheduleSearch.value.trim()}”에 해당하는 일정이 없습니다.`
+      : `${matchedSchedules.length}개 일정을 찾았습니다.${matchedSchedules.length > visibleSchedules.length ? " 상위 10개를 표시합니다." : ""}`;
+  }
+
+  scheduleTodayButton.addEventListener("click", () => {
+    if (relevantSchedule === null) {
+      scheduleToolStatus.textContent = "현재 날짜 이후의 교육 일정이 없습니다.";
+      return;
+    }
+
+    commitWeek(relevantSchedule.schedule.week, { shouldScroll: true, shouldFocus: true });
+    scheduleToolStatus.textContent = `${relevantSchedule.schedule.week}주차 ${relevantSchedule.schedule.date} 일정으로 이동했습니다.`;
+  });
+
+  scheduleDownloadButton.addEventListener("click", () => {
+    downloadScheduleCalendar();
+    scheduleToolStatus.textContent = "22주 전체 일정을 skala-class4-schedule.ics 파일로 저장했습니다.";
+  });
+
+  scheduleSearch.addEventListener("input", renderSearchResults);
+
+  scheduleSearchResults.addEventListener("click", (event) => {
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    const resultButton = target.closest(".schedule-search-result");
+
+    if (!(resultButton instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    const week = Number(resultButton.dataset.week);
+    commitWeek(week, { shouldScroll: true, shouldFocus: true });
+    scheduleToolStatus.textContent = `검색 결과의 ${week}주차 일정으로 이동했습니다.`;
+  });
 
   function getClosestWeek() {
     const scrollerBounds = scheduleWeekScroller.getBoundingClientRect();

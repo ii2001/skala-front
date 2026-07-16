@@ -62,14 +62,21 @@
           <legend>계정 정보</legend>
           <p>
             <label for="userId">아이디</label>
-            <input type="text" id="userId" name="userId" minlength="4" maxlength="15" required autocomplete="username" placeholder="4~15자 영문 또는 숫자" pattern="[A-Za-z0-9]+" title="4~15자의 영문 또는 숫자만 입력할 수 있습니다." aria-describedby="user-id-help">
+            <input type="text" id="userId" name="userId" minlength="4" maxlength="15" required autocomplete="username" placeholder="4~15자 영문 또는 숫자" pattern="[A-Za-z0-9]+" title="4~15자의 영문 또는 숫자만 입력할 수 있습니다." aria-describedby="user-id-help user-id-availability">
+            <button class="id-availability-check" type="button" id="user-id-check">아이디 중복 확인</button>
             <small id="user-id-help">4~15자의 영문 또는 숫자만 입력할 수 있습니다.</small>
+            <small id="user-id-availability" class="availability-status" data-state="neutral" aria-live="polite">서버가 없는 과제이므로 데모 목록을 기준으로 중복을 확인합니다.</small>
           </p>
           <p>
             <label for="userPassword">비밀번호</label>
-            <input type="password" id="userPassword" name="userPassword" minlength="8" maxlength="20" required autocomplete="new-password" placeholder="8~20자로 입력" aria-describedby="password-help">
+            <input type="password" id="userPassword" name="userPassword" minlength="8" maxlength="20" required autocomplete="new-password" placeholder="8~20자로 입력" aria-describedby="password-help password-strength-status">
             <button class="password-toggle" type="button" aria-controls="userPassword userPasswordConfirm" aria-pressed="false">비밀번호 표시</button>
             <small id="password-help">8~20자로 입력하되, 실제로 사용하는 비밀번호는 입력하지 마세요.</small>
+            <span class="password-strength">
+              <label for="password-strength-meter">비밀번호 강도</label>
+              <meter id="password-strength-meter" min="0" max="5" low="2" high="4" optimum="5" value="0">0 / 5</meter>
+              <small id="password-strength-status" aria-live="polite">비밀번호를 입력하면 강도를 확인할 수 있습니다.</small>
+            </span>
           </p>
           <p>
             <label for="userPasswordConfirm">비밀번호 확인</label>
@@ -160,6 +167,9 @@
         <fieldset class="reveal reveal-delay-1" id="terms-information" data-form-step="5" data-form-step-name="약관 동의">
           <legend>약관 동의</legend>
           <p>
+            <button class="terms-dialog-open" type="button" aria-haspopup="dialog" aria-controls="terms-dialog">개인정보 및 안내 수신 약관 자세히 보기</button>
+          </p>
+          <p>
             <input type="checkbox" id="termsAgreement" name="termsAgreement" value="agree" required>
             <label for="termsAgreement">개인정보 수집 및 이용에 동의합니다. (필수)</label>
           </p>
@@ -174,6 +184,22 @@
           <button type="reset">다시 작성</button>
         </div>
       </form>
+      <dialog class="terms-dialog" id="terms-dialog" aria-labelledby="terms-dialog-title">
+        <article>
+          <header>
+            <h2 id="terms-dialog-title">회원가입 약관 안내</h2>
+            <button class="terms-dialog-close" type="button">닫기</button>
+          </header>
+          <section aria-labelledby="privacy-terms-title">
+            <h3 id="privacy-terms-title">개인정보 수집 및 이용</h3>
+            <p>이 페이지는 HTML Form 과제용 데모이며 실제 서버에 개인정보를 저장하지 않습니다. 입력 구조와 브라우저 유효성 검사를 연습하기 위한 목적으로만 사용합니다.</p>
+          </section>
+          <section aria-labelledby="marketing-terms-title">
+            <h3 id="marketing-terms-title">교육 및 행사 안내 수신</h3>
+            <p>선택 동의 항목은 교육 프로그램과 행사 안내 수신 UI를 연습하기 위한 예시이며 실제 메시지는 발송되지 않습니다.</p>
+          </section>
+        </article>
+      </dialog>
     </main>
     <footer class="site-footer container">
       <small>회원가입 Form · SKALA Front-End Portfolio</small>

@@ -18,6 +18,7 @@
 - [x] `script/bag.js`
 - [x] `script/weatherAPI.js`
 - [x] `script/realtimeInfo.js`
+- [x] `script/tripShare.js`
 
 ## HTML 구조와 콘텐츠
 
@@ -32,6 +33,10 @@
 - [x] `myTrip.html`에 이미지, figure, 오디오·비디오와 내부 source, 보조 콘텐츠가 있다.
 - [x] `index.html`에서 모든 주요 페이지로 이동할 수 있다.
 - [x] `index.html`에 세 JavaScript 실습 카드와 실시간 날씨 선택·결과 영역이 있다.
+- [x] `index.html`에 도시 선택, 현재 위치, 수동 새로고침을 제공하는 현재 날씨 UI가 있다.
+- [x] `myClass.html`에 다음 교육일, 전체 검색과 캘린더 내보내기 UI가 있다.
+- [x] `signUp.html`에 아이디 확인, 비밀번호 강도 `meter`와 네이티브 약관 `dialog`가 있다.
+- [x] `myTrip.html`에 Web Share와 Clipboard 기능을 실행하는 공유 영역이 있다.
 
 ## HTML 품질
 
@@ -64,6 +69,7 @@
 - [x] 시간표 wrapper에 내부 가로 스크롤 규칙이 있다.
 - [x] JavaScript 실습 카드와 결과 상태에 공통 디자인 및 모바일 1열 규칙이 있다.
 - [x] 날씨 로딩·성공·오류 상태와 반응형 select·결과 영역 스타일이 있다.
+- [x] 날씨 상세 카드, 일정 도구, 비밀번호 강도·약관 dialog와 여행 공유 영역의 반응형 스타일이 있다.
 
 ## JavaScript 필수 과제
 
@@ -79,6 +85,11 @@
 - [x] `weatherAPI.js`는 Open-Meteo 요청을 export하고 좌표, HTTP 상태, 온도·습도·단위·시간 응답을 검증한다.
 - [x] `realtimeInfo.js`는 날씨 함수를 import하고 change 이벤트, 로딩·성공·오류 출력과 `try`/`catch`를 구현한다.
 - [x] 날씨 요청은 `AbortController`, 요청 번호와 컨트롤러 동일성 검사로 이전 응답의 덮어쓰기를 방지한다.
+- [x] 날씨는 체감온도·날씨 코드·풍속·주야간 정보를 검증하고 캐시 방지, 10분 자동 갱신과 12초 시간 초과를 구현한다.
+- [x] 현재 위치 날씨는 Geolocation API의 성공·권한 거부·위치 실패·시간 초과 상태를 처리한다.
+- [x] 교육 일정은 현재 날짜 기준 다음 일정, 전체 검색과 Blob·Object URL 기반 `.ics` 다운로드를 구현한다.
+- [x] 회원가입은 데모 아이디 확인, 비밀번호 강도 계산과 약관 dialog를 기존 Constraint Validation 흐름에 연결한다.
+- [x] 여행 공유는 Web Share API를 우선 사용하고 Clipboard API로 대체하며 실패 상태를 화면에 표시한다.
 - [x] 일반 스크립트는 IIFE로 격리되고 날씨 코드는 모듈 범위를 사용해 전역 이름 충돌을 방지한다.
 - [x] 모든 이벤트는 요소 존재 확인 후 `addEventListener`로 한 번씩 연결되며 미사용 변수나 함수가 없다.
 - [x] 동적 DOM 출력에 사용자·API 문자열을 `innerHTML`로 삽입하지 않고 `textContent` 또는 안전한 DOM 생성을 사용한다.
@@ -109,3 +120,6 @@
 - [x] 네 도시의 실제 Open-Meteo 응답에서 온도, 상대습도, 단위와 기준 시간이 표시되는지 확인한다.
 - [x] 도시를 빠르게 바꾸거나 네트워크를 차단했을 때 최신 결과와 오류 안내가 올바른지 확인한다.
 - [x] JavaScript 실행 중 브라우저 콘솔 오류와 누락된 리소스 요청이 없는지 확인한다.
+- [ ] 대상 브라우저에서 현재 위치 권한을 허용·거부했을 때 각각의 날씨 안내를 확인한다.
+- [ ] 다운로드한 `.ics` 파일을 실제 캘린더 앱으로 가져와 22주 일정과 한글 내용을 확인한다.
+- [ ] 실제 모바일 기기에서 Web Share 메뉴와 Clipboard 권한 동작을 확인한다.

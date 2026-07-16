@@ -11,9 +11,17 @@
   const stepLinks = Array.from(form.querySelectorAll("[data-form-step-link]"));
   const progressMeter = document.getElementById("form-progress-meter");
   const progressStatus = document.getElementById("form-progress-status");
+  const userIdInput = document.getElementById("userId");
+  const userIdCheckButton = document.getElementById("user-id-check");
+  const userIdAvailability = document.getElementById("user-id-availability");
   const passwordInput = document.getElementById("userPassword");
   const passwordConfirmation = document.getElementById("userPasswordConfirm");
   const passwordToggle = form.querySelector(".password-toggle");
+  const passwordStrengthMeter = document.getElementById("password-strength-meter");
+  const passwordStrengthStatus = document.getElementById("password-strength-status");
+  const termsDialog = document.getElementById("terms-dialog");
+  const termsDialogOpen = document.querySelector(".terms-dialog-open");
+  const termsDialogClose = document.querySelector(".terms-dialog-close");
   const introduction = document.getElementById("introduction");
   const introductionCount = document.querySelector("#introduction-count output");
   const feedbackStatus = document.getElementById("form-feedback-status");
@@ -24,7 +32,7 @@
       || control instanceof HTMLTextAreaElement
   ));
   const feedbackDefinitions = [
-    { id: "userId", validMessage: "아이디 입력 형식에 맞습니다." },
+    { id: "userId", validMessage: "아이디 중복 확인이 완료되었습니다." },
     { id: "userPassword", validMessage: "비밀번호 입력 조건에 맞습니다." },
     { id: "userPasswordConfirm", validMessage: "비밀번호가 일치합니다." },
     { id: "userEmail", validMessage: "이메일 입력 형식에 맞습니다." },
@@ -36,7 +44,9 @@
   ];
   const feedbackByControl = new Map();
   const touchedControls = new Set();
+  const unavailableUserIds = new Set(["admin", "administrator", "skala", "test", "user"]);
   let activeStep = null;
+  let confirmedUserId = "";
   let validationFocusFrame = null;
 
   function getStepNumber(element, attributeName) {
@@ -98,6 +108,114 @@
     const mismatchMessage = "비밀번호와 비밀번호 확인 값이 일치하지 않습니다.";
 
     passwordConfirmation.setCustomValidity(hasConfirmation && !passwordsMatch ? mismatchMessage : "");
+  }
+
+  function setAvailabilityStatus(message, state = "neutral") {
+    if (userIdAvailability === null) {
+      return;
+    }
+
+    userIdAvailability.textContent = message;
+    userIdAvailability.dataset.state = state;
+  }
+
+  function updateUserIdAvailabilityValidity() {
+    if (!(userIdInput instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const value = userIdInput.value.trim();
+    userIdInput.setCustomValidity("");
+
+    if (value === "") {
+      confirmedUserId = "";
+      setAvailabilityStatus("서버가 없는 과제이므로 데모 목록을 기준으로 중복을 확인합니다.");
+      return;
+    }
+
+    if (!userIdInput.validity.valid) {
+      confirmedUserId = "";
+      setAvailabilityStatus("먼저 아이디 입력 형식을 확인해 주세요.");
+      return;
+    }
+
+    if (confirmedUserId !== value) {
+      userIdInput.setCustomValidity("아이디 사용 가능 여부를 확인해 주세요.");
+      setAvailabilityStatus("입력 형식에 맞습니다. 중복 확인 버튼을 눌러 주세요.");
+    }
+  }
+
+  function checkUserIdAvailability() {
+    if (!(userIdInput instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const value = userIdInput.value.trim();
+    userIdInput.setCustomValidity("");
+    touchedControls.add(userIdInput);
+
+    if (!userIdInput.validity.valid) {
+      confirmedUserId = "";
+      setAvailabilityStatus("아이디 형식을 수정한 뒤 다시 확인해 주세요.", "invalid");
+      renderControlFeedback(userIdInput, true);
+      userIdInput.focus();
+      return;
+    }
+
+    if (unavailableUserIds.has(value.toLocaleLowerCase("en-US"))) {
+      confirmedUserId = "";
+      userIdInput.setCustomValidity("데모 목록에서 이미 사용 중인 아이디입니다.");
+      setAvailabilityStatus("이미 사용 중인 아이디입니다. 다른 아이디를 입력해 주세요.", "invalid");
+      renderControlFeedback(userIdInput, true);
+      announceControlFeedback(userIdInput);
+      userIdInput.focus();
+      return;
+    }
+
+    confirmedUserId = value;
+    setAvailabilityStatus("데모 기준으로 사용할 수 있는 아이디입니다.", "valid");
+    renderControlFeedback(userIdInput, true);
+    announceControlFeedback(userIdInput);
+  }
+
+  function updatePasswordStrength() {
+    if (!(passwordInput instanceof HTMLInputElement)
+      || typeof HTMLMeterElement === "undefined"
+      || !(passwordStrengthMeter instanceof HTMLMeterElement)
+      || passwordStrengthStatus === null) {
+      return;
+    }
+
+    const value = passwordInput.value;
+    let score = 0;
+
+    if (value.length >= 8) {
+      score += 1;
+    }
+
+    if (value.length >= 12) {
+      score += 1;
+    }
+
+    if (/[a-z]/.test(value) && /[A-Z]/.test(value)) {
+      score += 1;
+    }
+
+    if (/\d/.test(value)) {
+      score += 1;
+    }
+
+    if (/[^A-Za-z0-9]/.test(value)) {
+      score += 1;
+    }
+
+    const labels = ["입력 전", "매우 약함", "약함", "보통", "강함", "매우 강함"];
+    passwordStrengthMeter.value = score;
+    passwordStrengthMeter.textContent = `${score} / 5`;
+    passwordStrengthMeter.dataset.strength = String(score);
+    passwordStrengthStatus.textContent = value === ""
+      ? "비밀번호를 입력하면 강도를 확인할 수 있습니다."
+      : `비밀번호 강도: ${labels[score]} (${score} / 5)`;
   }
 
   function getControlLabel(control) {
@@ -273,6 +391,7 @@
   }
 
   function renderAllControlFeedback(force = false) {
+    updateUserIdAvailabilityValidity();
     updatePasswordConfirmationValidity();
 
     for (const control of feedbackByControl.keys()) {
@@ -281,6 +400,7 @@
   }
 
   function getInvalidControls() {
+    updateUserIdAvailabilityValidity();
     updatePasswordConfirmationValidity();
     return formControls.filter((control) => control.willValidate && !control.validity.valid);
   }
@@ -400,7 +520,43 @@
     });
   }
 
+  if (userIdInput instanceof HTMLInputElement
+    && userIdCheckButton instanceof HTMLButtonElement) {
+    userIdInput.addEventListener("input", () => {
+      confirmedUserId = "";
+      updateUserIdAvailabilityValidity();
+    });
+    userIdCheckButton.addEventListener("click", checkUserIdAvailability);
+  }
+
+  if (passwordInput instanceof HTMLInputElement) {
+    passwordInput.addEventListener("input", updatePasswordStrength);
+    updatePasswordStrength();
+  }
+
+  if (typeof HTMLDialogElement !== "undefined"
+    && termsDialog instanceof HTMLDialogElement
+    && termsDialogOpen instanceof HTMLButtonElement
+    && termsDialogClose instanceof HTMLButtonElement
+    && typeof termsDialog.showModal === "function") {
+    termsDialogOpen.addEventListener("click", () => {
+      termsDialog.showModal();
+      termsDialogClose.focus();
+    });
+    termsDialogClose.addEventListener("click", () => {
+      termsDialog.close();
+    });
+    termsDialog.addEventListener("click", (event) => {
+      if (event.target === termsDialog) {
+        termsDialog.close();
+      }
+    });
+  } else if (termsDialogOpen instanceof HTMLButtonElement) {
+    termsDialogOpen.hidden = true;
+  }
+
   initializeValidationFeedback();
+  updateUserIdAvailabilityValidity();
   updatePasswordConfirmationValidity();
   form.addEventListener("input", handleControlInteraction);
   form.addEventListener("change", handleControlInteraction);
@@ -409,12 +565,14 @@
 
   form.addEventListener("click", (event) => {
     if (event.target instanceof HTMLButtonElement && event.target.type === "submit") {
+      updateUserIdAvailabilityValidity();
       updatePasswordConfirmationValidity();
     }
   });
 
   form.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
+      updateUserIdAvailabilityValidity();
       updatePasswordConfirmationValidity();
     }
   });
@@ -450,7 +608,10 @@
 
       updateStep(1);
       updatePasswordToggle(false);
+      confirmedUserId = "";
+      updateUserIdAvailabilityValidity();
       updatePasswordConfirmationValidity();
+      updatePasswordStrength();
       updateIntroductionCount();
 
       if (feedbackStatus !== null) {

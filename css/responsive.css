@@ -208,6 +208,18 @@
     margin-top: 0.5rem;
   }
 
+  .weather-actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .weather-current {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .weather-temperature {
+    grid-column: 1 / -1;
+  }
+
   .sign-up-form {
     padding: 1rem;
   }
@@ -254,6 +266,17 @@
     margin-bottom: 0.75rem;
   }
 
+  .schedule-meta dd {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .schedule-tools {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .schedule-week-browser {
     padding: 1rem;
   }
@@ -272,6 +295,18 @@
 
   .trip-lightbox-header {
     align-items: flex-start;
+  }
+
+  .trip-share-actions {
+    flex-direction: column;
+  }
+
+  .terms-dialog header {
+    flex-direction: column;
+  }
+
+  .terms-dialog-close {
+    width: 100%;
   }
 }
 
@@ -354,6 +389,9 @@
   .form-actions button:hover,
   .form-actions button:active,
   .weather-retry:active,
+  .weather-actions button:hover,
+  .schedule-tools button:hover,
+  .trip-share-actions button:hover,
   .result-actions a:hover,
   .site-main > nav a:hover {
     transform: none;

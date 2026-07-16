@@ -8,6 +8,7 @@
     <script src="../script/theme.js"></script>
     <script src="../script/motion.js"></script>
     <script src="../script/tripGallery.js" defer></script>
+    <script src="../script/tripShare.js" defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="../css/style.css">
   </head>
@@ -116,6 +117,17 @@
           </ul>
         </details>
       </aside>
+
+      <section class="trip-share-panel reveal reveal-delay-1" aria-labelledby="trip-share-title">
+        <p class="trip-share-eyebrow">SHARE THE JOURNEY</p>
+        <h2 id="trip-share-title">제주 여행 페이지 공유하기</h2>
+        <p>마음에 드는 여행 페이지를 기기의 공유 메뉴로 보내거나 주소를 클립보드에 복사할 수 있습니다.</p>
+        <div class="trip-share-actions">
+          <button type="button" id="trip-share-button">여행 페이지 공유</button>
+          <button type="button" id="trip-copy-button">페이지 주소 복사</button>
+        </div>
+        <p id="trip-share-status" class="trip-share-status" aria-live="polite"></p>
+      </section>
 
       <nav class="reveal reveal-delay-1" aria-label="여행 페이지 이동">
         <ul>

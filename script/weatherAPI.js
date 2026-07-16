@@ -17,10 +17,13 @@ export async function getCurrentWeather(latitude, longitude, signal) {
   const query = new URLSearchParams({
     latitude: String(latitude),
     longitude: String(longitude),
-    current: "temperature_2m,relative_humidity_2m",
+    current: "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,is_day",
     timezone: "auto"
   });
-  const requestOptions = signal === undefined ? {} : { signal };
+  const requestOptions = {
+    cache: "no-store",
+    ...(signal === undefined ? {} : { signal })
+  };
   const response = await fetch(`${OPEN_METEO_URL}?${query.toString()}`, requestOptions);
 
   if (!response.ok) {
@@ -41,8 +44,14 @@ export async function getCurrentWeather(latitude, longitude, signal) {
 
   const temperature = current.temperature_2m;
   const humidity = current.relative_humidity_2m;
+  const apparentTemperature = current.apparent_temperature;
+  const weatherCode = current.weather_code;
+  const windSpeed = current.wind_speed_10m;
+  const isDay = current.is_day;
   const temperatureUnit = currentUnits.temperature_2m;
   const humidityUnit = currentUnits.relative_humidity_2m;
+  const apparentTemperatureUnit = currentUnits.apparent_temperature;
+  const windSpeedUnit = currentUnits.wind_speed_10m;
   const time = current.time;
 
   if (typeof temperature !== "number" || !Number.isFinite(temperature)) {
@@ -56,12 +65,36 @@ export async function getCurrentWeather(latitude, longitude, signal) {
     throw new Error("응답의 상대습도 값은 0부터 100 사이여야 합니다.");
   }
 
+  if (typeof apparentTemperature !== "number" || !Number.isFinite(apparentTemperature)) {
+    throw new Error("응답의 체감온도 값이 올바르지 않습니다.");
+  }
+
+  if (typeof weatherCode !== "number" || !Number.isInteger(weatherCode)) {
+    throw new Error("응답의 날씨 코드가 올바르지 않습니다.");
+  }
+
+  if (typeof windSpeed !== "number" || !Number.isFinite(windSpeed) || windSpeed < 0) {
+    throw new Error("응답의 풍속 값이 올바르지 않습니다.");
+  }
+
+  if (isDay !== 0 && isDay !== 1) {
+    throw new Error("응답의 주야간 정보가 올바르지 않습니다.");
+  }
+
   if (typeof temperatureUnit !== "string" || temperatureUnit.trim() === "") {
     throw new Error("응답의 온도 단위가 올바르지 않습니다.");
   }
 
   if (typeof humidityUnit !== "string" || humidityUnit.trim() === "") {
     throw new Error("응답의 습도 단위가 올바르지 않습니다.");
+  }
+
+  if (typeof apparentTemperatureUnit !== "string" || apparentTemperatureUnit.trim() === "") {
+    throw new Error("응답의 체감온도 단위가 올바르지 않습니다.");
+  }
+
+  if (typeof windSpeedUnit !== "string" || windSpeedUnit.trim() === "") {
+    throw new Error("응답의 풍속 단위가 올바르지 않습니다.");
   }
 
   if (typeof time !== "string" || time.trim() === "") {
@@ -71,8 +104,14 @@ export async function getCurrentWeather(latitude, longitude, signal) {
   return {
     temperature,
     humidity,
+    apparentTemperature,
+    weatherCode,
+    windSpeed,
+    isDay,
     temperatureUnit,
     humidityUnit,
+    apparentTemperatureUnit,
+    windSpeedUnit,
     time
   };
 }
