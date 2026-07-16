@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="입력 오류 안내와 브라우저 기본 유효성 검사를 구현한 SKALA 회원가입 페이지입니다.">
+    <meta name="description" content="입력 항목별 실시간 유효성 안내를 제공하는 SKALA 회원가입 실습 페이지입니다.">
     <title>SKALA 회원가입</title>
     <script src="../script/theme.js"></script>
     <script src="../script/motion.js"></script>
@@ -39,12 +39,7 @@
       <form class="sign-up-form" action="signUpResult.html" method="get" autocomplete="on">
         <p>필수 입력 항목은 반드시 작성하거나 선택해야 합니다.</p>
         <p><small>이 데모는 GET 방식으로 입력값을 전달하며 실제 서버에 저장하지 않습니다. 실제 비밀번호나 민감한 개인정보를 입력하지 마세요.</small></p>
-
-        <section class="form-validation-summary" id="form-validation-summary" aria-labelledby="form-validation-heading" aria-live="assertive" aria-atomic="true" tabindex="-1" hidden>
-          <h2 id="form-validation-heading">입력 내용을 확인해 주세요</h2>
-          <p>회원가입을 완료하려면 다음 항목을 수정해야 합니다.</p>
-          <ul id="form-validation-errors"></ul>
-        </section>
+        <p class="visually-hidden" id="form-feedback-status" aria-live="polite" aria-atomic="true"></p>
 
         <section class="form-progress reveal" aria-labelledby="form-progress-heading">
           <h2 id="form-progress-heading">입력 단계 바로가기</h2>
