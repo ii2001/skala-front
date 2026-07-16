@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HTML 폼 요소와 브라우저 기본 유효성 검사를 구현한 회원가입 UI 데모입니다.">
-    <title>회원가입 UI 데모</title>
+    <meta name="description" content="입력 오류 안내와 브라우저 기본 유효성 검사를 구현한 SKALA 회원가입 페이지입니다.">
+    <title>SKALA 회원가입</title>
     <script src="../script/theme.js"></script>
     <script src="../script/motion.js"></script>
     <script src="../script/formEnhancements.js" defer></script>
@@ -26,19 +26,25 @@
           <li><a href="myProfile.html">나의 소개</a></li>
           <li><a href="myClass.html">학습 일정</a></li>
           <li><a href="myTrip.html">여행지</a></li>
-          <li><a href="signUp.html" aria-current="page">폼 UI 데모</a></li>
+          <li><a href="signUp.html" aria-current="page">회원가입</a></li>
         </ul>
       </nav>
       <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
     </div>
     <header class="site-header container">
-      <h1>회원가입 UI 데모</h1>
-      <p>HTML 폼 요소와 브라우저 기본 유효성 검사를 구현한 UI 데모입니다. 입력한 정보는 실제 서버에 저장되지 않습니다.</p>
+      <h1>SKALA 회원가입</h1>
+      <p>HTML 폼 요소와 브라우저 유효성 검사를 연습하는 회원가입 페이지입니다. 입력한 정보는 실제 서버에 저장되지 않습니다.</p>
     </header>
     <main class="site-main container" id="main-content" tabindex="-1">
       <form class="sign-up-form" action="signUpResult.html" method="get" autocomplete="on">
         <p>필수 입력 항목은 반드시 작성하거나 선택해야 합니다.</p>
         <p><small>이 데모는 GET 방식으로 입력값을 전달하며 실제 서버에 저장하지 않습니다. 실제 비밀번호나 민감한 개인정보를 입력하지 마세요.</small></p>
+
+        <section class="form-validation-summary" id="form-validation-summary" aria-labelledby="form-validation-heading" aria-live="assertive" aria-atomic="true" tabindex="-1" hidden>
+          <h2 id="form-validation-heading">입력 내용을 확인해 주세요</h2>
+          <p>회원가입을 완료하려면 다음 항목을 수정해야 합니다.</p>
+          <ul id="form-validation-errors"></ul>
+        </section>
 
         <section class="form-progress reveal" aria-labelledby="form-progress-heading">
           <h2 id="form-progress-heading">입력 단계 바로가기</h2>
@@ -67,8 +73,13 @@
           <p>
             <label for="userPassword">비밀번호</label>
             <input type="password" id="userPassword" name="userPassword" minlength="8" maxlength="20" required autocomplete="new-password" placeholder="8~20자로 입력" aria-describedby="password-help">
-            <button class="password-toggle" type="button" aria-controls="userPassword">비밀번호 표시</button>
+            <button class="password-toggle" type="button" aria-controls="userPassword userPasswordConfirm" aria-pressed="false">비밀번호 표시</button>
             <small id="password-help">8~20자로 입력하되, 실제로 사용하는 비밀번호는 입력하지 마세요.</small>
+          </p>
+          <p>
+            <label for="userPasswordConfirm">비밀번호 확인</label>
+            <input type="password" id="userPasswordConfirm" name="userPasswordConfirm" minlength="8" maxlength="20" required autocomplete="new-password" placeholder="비밀번호를 한 번 더 입력" aria-describedby="password-confirm-help">
+            <small id="password-confirm-help">위에서 입력한 비밀번호와 같은 값을 입력해 주세요.</small>
           </p>
           <p>
             <label for="userEmail">이메일</label>
@@ -164,13 +175,13 @@
         </fieldset>
 
         <div class="form-actions reveal reveal-delay-2">
-          <button type="submit">폼 제출하기</button>
+          <button type="submit">회원가입</button>
           <button type="reset">다시 작성</button>
         </div>
       </form>
     </main>
     <footer class="site-footer container">
-      <small>HTML Form Demo · SKALA Front-End Portfolio</small>
+      <small>회원가입 Form · SKALA Front-End Portfolio</small>
     </footer>
     <button class="back-to-top" type="button" hidden>맨 위로</button>
     <script src="../script/visualEffects.js" defer></script>

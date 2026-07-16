@@ -242,6 +242,12 @@ function initializeClassSchedule() {
   let renderedWeek = null;
   let scrollFrame = 0;
   let scrollTimer = 0;
+  let dragPointerId = null;
+  let dragStartX = 0;
+  let dragStartScrollLeft = 0;
+  let isDragging = false;
+  let suppressClickUntil = 0;
+  const dragThreshold = 6;
 
   scheduleWeekList.replaceChildren(...weekGroups.map(createWeekCard));
   scheduleWeekTotal.textContent = String(classScheduleMeta.totalWeeks);
@@ -327,6 +333,92 @@ function initializeClassSchedule() {
 
     return closestWeek;
   }
+
+  function isDragPointer(event) {
+    return event.isPrimary
+      && event.button === 0
+      && (event.pointerType === "mouse" || event.pointerType === "pen");
+  }
+
+  function finishPointerDrag(pointerId) {
+    if (dragPointerId !== pointerId) {
+      return;
+    }
+
+    const completedDrag = isDragging;
+    dragPointerId = null;
+    isDragging = false;
+    scheduleWeekScroller.classList.remove("is-dragging");
+
+    if (scheduleWeekScroller.hasPointerCapture(pointerId)) {
+      scheduleWeekScroller.releasePointerCapture(pointerId);
+    }
+
+    if (completedDrag) {
+      suppressClickUntil = window.performance.now() + 500;
+      commitWeek(getClosestWeek());
+    }
+  }
+
+  scheduleWeekScroller.addEventListener("pointerdown", (event) => {
+    if (!isDragPointer(event)) {
+      return;
+    }
+
+    dragPointerId = event.pointerId;
+    dragStartX = event.clientX;
+    dragStartScrollLeft = scheduleWeekScroller.scrollLeft;
+    isDragging = false;
+  });
+
+  scheduleWeekScroller.addEventListener("pointermove", (event) => {
+    if (event.pointerId !== dragPointerId) {
+      return;
+    }
+
+    const dragDistance = event.clientX - dragStartX;
+
+    if (!isDragging) {
+      if (Math.abs(dragDistance) < dragThreshold) {
+        return;
+      }
+
+      isDragging = true;
+      scheduleWeekScroller.classList.add("is-dragging");
+      scheduleWeekScroller.setPointerCapture(event.pointerId);
+    }
+
+    event.preventDefault();
+    scheduleWeekScroller.scrollLeft = dragStartScrollLeft - dragDistance;
+  }, { passive: false });
+
+  scheduleWeekScroller.addEventListener("pointerleave", (event) => {
+    if (event.pointerId === dragPointerId && !isDragging) {
+      dragPointerId = null;
+    }
+  });
+
+  scheduleWeekScroller.addEventListener("pointerup", (event) => {
+    finishPointerDrag(event.pointerId);
+  });
+
+  scheduleWeekScroller.addEventListener("pointercancel", (event) => {
+    finishPointerDrag(event.pointerId);
+  });
+
+  scheduleWeekScroller.addEventListener("lostpointercapture", (event) => {
+    finishPointerDrag(event.pointerId);
+  });
+
+  scheduleWeekScroller.addEventListener("click", (event) => {
+    if (window.performance.now() > suppressClickUntil) {
+      return;
+    }
+
+    suppressClickUntil = 0;
+    event.preventDefault();
+    event.stopPropagation();
+  }, true);
 
   scheduleWeekScroller.addEventListener("scroll", () => {
     window.clearTimeout(scrollTimer);
