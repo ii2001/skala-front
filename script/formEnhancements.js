@@ -202,6 +202,12 @@
     });
   }
 
+  function refreshVisibleValidationSummary() {
+    if (validationSummary !== null && !validationSummary.hidden) {
+      renderValidationSummary();
+    }
+  }
+
   function updateIntroductionCount() {
     if (introduction === null || introductionCount === null) {
       return;
@@ -259,17 +265,8 @@
 
   form.addEventListener("invalid", scheduleValidationSummary, true);
 
-  form.addEventListener("input", () => {
-    if (validationSummary !== null && !validationSummary.hidden) {
-      renderValidationSummary();
-    }
-  });
-
-  form.addEventListener("change", () => {
-    if (validationSummary !== null && !validationSummary.hidden) {
-      renderValidationSummary();
-    }
-  });
+  form.addEventListener("input", refreshVisibleValidationSummary);
+  form.addEventListener("change", refreshVisibleValidationSummary);
 
   form.addEventListener("submit", clearValidationSummary);
 

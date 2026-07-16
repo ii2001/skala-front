@@ -246,7 +246,8 @@ function initializeClassSchedule() {
   let dragStartX = 0;
   let dragStartScrollLeft = 0;
   let isDragging = false;
-  let suppressClickUntil = 0;
+  let suppressNextPointerClick = false;
+  let clickSuppressionTimer = 0;
   const dragThreshold = 6;
 
   scheduleWeekList.replaceChildren(...weekGroups.map(createWeekCard));
@@ -355,7 +356,12 @@ function initializeClassSchedule() {
     }
 
     if (completedDrag) {
-      suppressClickUntil = window.performance.now() + 500;
+      suppressNextPointerClick = true;
+      window.clearTimeout(clickSuppressionTimer);
+      clickSuppressionTimer = window.setTimeout(() => {
+        suppressNextPointerClick = false;
+        clickSuppressionTimer = 0;
+      }, 0);
       commitWeek(getClosestWeek());
     }
   }
@@ -365,6 +371,9 @@ function initializeClassSchedule() {
       return;
     }
 
+    suppressNextPointerClick = false;
+    window.clearTimeout(clickSuppressionTimer);
+    clickSuppressionTimer = 0;
     dragPointerId = event.pointerId;
     dragStartX = event.clientX;
     dragStartScrollLeft = scheduleWeekScroller.scrollLeft;
@@ -411,11 +420,13 @@ function initializeClassSchedule() {
   });
 
   scheduleWeekScroller.addEventListener("click", (event) => {
-    if (window.performance.now() > suppressClickUntil) {
+    if (!suppressNextPointerClick || event.detail === 0) {
       return;
     }
 
-    suppressClickUntil = 0;
+    suppressNextPointerClick = false;
+    window.clearTimeout(clickSuppressionTimer);
+    clickSuppressionTimer = 0;
     event.preventDefault();
     event.stopPropagation();
   }, true);
@@ -423,17 +434,12 @@ function initializeClassSchedule() {
   scheduleWeekScroller.addEventListener("scroll", () => {
     window.clearTimeout(scrollTimer);
 
-    if (scrollFrame !== 0) {
-      scrollTimer = window.setTimeout(() => {
-        commitWeek(getClosestWeek());
-      }, 160);
-      return;
+    if (scrollFrame === 0) {
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = 0;
+        updateActiveWeek(getClosestWeek());
+      });
     }
-
-    scrollFrame = window.requestAnimationFrame(() => {
-      scrollFrame = 0;
-      updateActiveWeek(getClosestWeek());
-    });
 
     scrollTimer = window.setTimeout(() => {
       commitWeek(getClosestWeek());

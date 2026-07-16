@@ -102,8 +102,8 @@
             <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="010-1234-5678" pattern="010-[0-9]{4}-[0-9]{4}" title="010-1234-5678 형식으로 입력해 주세요." aria-describedby="phone-help">
             <small id="phone-help">010-1234-5678 형식으로 입력해 주세요.</small>
           </p>
-          <p>성별</p>
-          <p>
+          <p id="gender-group-label">성별</p>
+          <p role="group" aria-labelledby="gender-group-label">
             <input type="radio" id="genderMale" name="gender" value="male">
             <label for="genderMale">남성</label>
             <input type="radio" id="genderFemale" name="gender" value="female">
@@ -126,8 +126,8 @@
               <option value="ai">인공지능</option>
             </select>
           </p>
-          <p>관심 기술</p>
-          <p>
+          <p id="interests-group-label">관심 기술</p>
+          <p role="group" aria-labelledby="interests-group-label">
             <input type="checkbox" id="interestHtml" name="interests" value="html">
             <label for="interestHtml">HTML</label>
             <input type="checkbox" id="interestCss" name="interests" value="css">

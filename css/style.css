@@ -16,8 +16,8 @@
   --color-primary-strong: #4357c0;
   --color-primary-strong-hover: #3448aa;
   --color-primary-soft: rgba(82, 103, 216, 0.1);
-  --color-accent: #bd7d32;
-  --color-accent-soft: rgba(189, 125, 50, 0.1);
+  --color-accent: #925d24;
+  --color-accent-soft: rgba(146, 93, 36, 0.1);
   --color-border: #d7deea;
   --color-border-strong: #b8c3d4;
   --color-success: #1f7a50;
@@ -34,13 +34,13 @@
   --color-graphic-pink: #bd326f;
   --color-glass: rgba(255, 255, 255, 0.82);
   --color-glass-border: rgba(82, 103, 216, 0.22);
-  --color-placeholder: #748197;
+  --color-placeholder: var(--color-text-muted);
   --color-mark: #684300;
   --color-mark-background: #fff0c7;
   --color-mark-border: #dfb55f;
   --color-selection: rgba(82, 103, 216, 0.22);
   --color-glow-primary: rgba(82, 103, 216, 0.16);
-  --color-glow-accent: rgba(189, 125, 50, 0.1);
+  --color-glow-accent: rgba(146, 93, 36, 0.1);
   --color-surface-highlight: rgba(255, 255, 255, 0.82);
   --color-heading-glow: rgba(82, 103, 216, 0.12);
   --radius: 1.25rem;
@@ -53,7 +53,6 @@
   --focus-ring: 0 0 0 0.25rem rgba(138, 93, 0, 0.14);
   --content-max-width: 75rem;
   --topbar-offset: 5.5rem;
-  --motion-duration-instant: 120ms;
   --motion-duration-fast: 200ms;
   --motion-duration-base: 340ms;
   --motion-duration-emphasis: 600ms;
@@ -219,54 +218,68 @@ summary:focus-visible {
   transform: translateY(0);
 }
 
-.motion-ready .reveal,
-.motion-ready .reveal-on-scroll {
+:where(.motion-ready) :where(.reveal, .reveal-on-scroll) {
+  --reveal-delay: 0ms;
+  --reveal-x: 0;
+  --reveal-y: var(--motion-distance-medium);
+  --reveal-scale: 1;
+}
+
+:where(.motion-ready) :where(.reveal, .reveal-on-scroll):not(.is-revealed) {
   opacity: 0;
   filter: blur(0.35rem);
-  transform: translateY(var(--motion-distance-medium));
+  transform: translate(var(--reveal-x), var(--reveal-y)) scale(var(--reveal-scale));
 }
 
-.motion-ready .reveal.is-revealed,
-.motion-ready .reveal-on-scroll.is-revealed {
-  opacity: 1;
-  filter: blur(0);
-  transform: translateY(0);
-  transition:
-    opacity var(--motion-duration-base) var(--motion-ease-standard),
-    filter var(--motion-duration-base) var(--motion-ease-standard),
-    transform var(--motion-duration-base) var(--motion-ease-standard);
-}
-
-.motion-ready .reveal:focus-within,
-.motion-ready .reveal-on-scroll:focus-within {
+:where(.motion-ready) :where(.reveal.is-revealed, .reveal-on-scroll.is-revealed) {
   opacity: 1;
   filter: none;
   transform: none;
-  transition: none;
+  animation: reveal-in var(--motion-duration-base) var(--motion-ease-standard) var(--reveal-delay) backwards;
 }
 
-.motion-ready .reveal-left {
-  transform: translateX(calc(var(--motion-distance-medium) * -1.5));
+:where(.motion-ready) :where(.reveal, .reveal-on-scroll):focus-within {
+  opacity: 1;
+  filter: none;
+  transform: none;
+  animation: none;
 }
 
-.motion-ready .reveal-right {
-  transform: translateX(calc(var(--motion-distance-medium) * 1.5));
+:where(.motion-ready) :where(.reveal-left) {
+  --reveal-x: calc(var(--motion-distance-medium) * -1.5);
+  --reveal-y: 0;
 }
 
-.motion-ready .reveal-zoom {
-  transform: scale(0.96);
+:where(.motion-ready) :where(.reveal-right) {
+  --reveal-x: calc(var(--motion-distance-medium) * 1.5);
+  --reveal-y: 0;
 }
 
-.motion-ready .reveal-delay-1.is-revealed {
-  transition-delay: 60ms;
+:where(.motion-ready) :where(.reveal-zoom) {
+  --reveal-y: 0;
+  --reveal-scale: 0.96;
 }
 
-.motion-ready .reveal-delay-2.is-revealed {
-  transition-delay: 120ms;
+:where(.reveal-delay-1) {
+  --reveal-delay: 60ms;
 }
 
-.motion-ready .reveal-delay-3.is-revealed {
-  transition-delay: 180ms;
+:where(.reveal-delay-2) {
+  --reveal-delay: 120ms;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    filter: blur(0.35rem);
+    transform: translate(var(--reveal-x), var(--reveal-y)) scale(var(--reveal-scale));
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
 }
 
 body > .page-scroll-progress {
@@ -379,15 +392,16 @@ body > .page-scroll-progress::-moz-progress-bar {
   max-width: 100%;
   min-width: 0;
   margin: 0;
-  overflow: hidden;
   grid-area: navigation;
 }
 
 .floating-topbar .nav-list {
+  padding: 0.375rem;
   flex-wrap: nowrap;
   justify-content: center;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
+  scroll-padding-inline: 0.375rem;
   scrollbar-width: none;
 }
 
@@ -1250,20 +1264,20 @@ nav li + li {
   --card-glow: var(--color-accent);
 }
 
-.portal-grid li:nth-child(2) .portal-card.is-revealed {
-  transition-delay: 50ms;
+.portal-grid li:nth-child(2) .portal-card {
+  --reveal-delay: 50ms;
 }
 
-.portal-grid li:nth-child(3) .portal-card.is-revealed {
-  transition-delay: 100ms;
+.portal-grid li:nth-child(3) .portal-card {
+  --reveal-delay: 100ms;
 }
 
-.portal-grid li:nth-child(4) .portal-card.is-revealed {
-  transition-delay: 150ms;
+.portal-grid li:nth-child(4) .portal-card {
+  --reveal-delay: 150ms;
 }
 
-.portal-grid li:nth-child(5) .portal-card.is-revealed {
-  transition-delay: 200ms;
+.portal-grid li:nth-child(5) .portal-card {
+  --reveal-delay: 200ms;
 }
 
 .learning-status {
@@ -1733,7 +1747,7 @@ nav li + li {
       var(--color-graphic-cyan)
     );
   opacity: 0.28;
-  filter: blur(0);
+  filter: none;
   animation: hero-orb-in 900ms var(--motion-ease-standard) both;
 }
 
@@ -1869,7 +1883,7 @@ nav li + li {
 
   to {
     opacity: 1;
-    filter: blur(0);
+    filter: none;
     transform: translateY(0) scale(1);
   }
 }
@@ -2135,7 +2149,6 @@ tbody tr:hover > * {
   min-width: 0;
   margin-top: 0;
   padding: 1rem;
-  flex: 0 0 auto;
   gap: 0.55rem;
   border: 0.0625rem solid var(--color-border);
   border-radius: var(--radius-small);
@@ -2205,10 +2218,8 @@ tbody tr:hover > * {
 
 .schedule-week-days {
   display: grid;
-  padding: 0;
   grid-template-columns: repeat(auto-fit, minmax(3.25rem, 1fr));
   gap: 0.4rem;
-  list-style: none;
 }
 
 .schedule-week-day,
@@ -3080,6 +3091,7 @@ figcaption {
 
   body {
     overflow-x: hidden;
+    overflow-x: clip;
     background-attachment: scroll;
   }
 
@@ -3114,7 +3126,7 @@ figcaption {
 
   .floating-topbar .nav-list {
     display: flex;
-    padding: 0.1rem;
+    padding: 0.375rem;
     grid-template-columns: none;
     justify-content: flex-start;
     scroll-snap-type: inline proximity;
@@ -3433,6 +3445,12 @@ figcaption {
 }
 
 @media (forced-colors: active) {
+  .portal-header h1 {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+
   .floating-topbar,
   .portal-card,
   .practice-card,

@@ -48,6 +48,12 @@
         backToTop.classList.toggle("is-visible", isPastThreshold);
         backToTop.setAttribute("aria-hidden", String(!isPastThreshold));
         backToTop.tabIndex = isPastThreshold ? 0 : -1;
+
+        if (!isPastThreshold
+          && document.activeElement === backToTop
+          && topFocusTarget instanceof HTMLAnchorElement) {
+          topFocusTarget.focus({ preventScroll: true });
+        }
       }
     }
 
@@ -124,6 +130,11 @@
     }
 
     function requestTiltUpdate(element, event) {
+      if (!canUseTilt()) {
+        clearTilt(element);
+        return;
+      }
+
       pendingPointerPositions.set(element, {
         clientX: event.clientX,
         clientY: event.clientY

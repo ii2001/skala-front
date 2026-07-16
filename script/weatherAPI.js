@@ -49,8 +49,11 @@ export async function getCurrentWeather(latitude, longitude, signal) {
     throw new Error("응답의 현재 온도 값이 올바르지 않습니다.");
   }
 
-  if (typeof humidity !== "number" || !Number.isFinite(humidity)) {
-    throw new Error("응답의 상대습도 값이 올바르지 않습니다.");
+  if (typeof humidity !== "number"
+    || !Number.isFinite(humidity)
+    || humidity < 0
+    || humidity > 100) {
+    throw new Error("응답의 상대습도 값은 0부터 100 사이여야 합니다.");
   }
 
   if (typeof temperatureUnit !== "string" || temperatureUnit.trim() === "") {
