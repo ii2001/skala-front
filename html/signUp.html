@@ -3,30 +3,30 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SKALA 교육과정 학습을 위한 실습용 회원가입 정보를 입력하는 페이지입니다.">
-    <title>SKALA 회원가입</title>
+    <meta name="description" content="HTML 폼 요소와 브라우저 기본 유효성 검사를 구현한 회원가입 UI 데모입니다.">
+    <title>회원가입 UI 데모</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="../css/style.css">
   </head>
   <body>
     <header class="site-header container">
-      <h1>SKALA 회원가입</h1>
-      <p>아래 안내에 따라 회원가입에 필요한 정보를 입력해 주세요.</p>
+      <h1>회원가입 UI 데모</h1>
+      <p>HTML 폼 요소와 브라우저 기본 유효성 검사를 구현한 UI 데모입니다. 입력한 정보는 실제 서버에 저장되지 않습니다.</p>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html">메인</a></li>
           <li><a href="holiday.html">휴일 일과</a></li>
           <li><a href="myProfile.html">나의 소개</a></li>
-          <li><a href="myClass.html">강의 일정</a></li>
+          <li><a href="myClass.html">학습 일정</a></li>
           <li><a href="myTrip.html">여행지</a></li>
-          <li><a href="signUp.html" aria-current="page">회원가입</a></li>
+          <li><a href="signUp.html" aria-current="page">폼 UI 데모</a></li>
         </ul>
       </nav>
     </header>
     <main class="site-main container">
       <form class="sign-up-form" action="signUpResult.html" method="get" autocomplete="on">
         <p>필수 입력 항목은 반드시 작성하거나 선택해야 합니다.</p>
-        <p><small>실습용 페이지이므로 민감한 실제 개인정보를 입력하지 마세요.</small></p>
+        <p><small>이 데모는 GET 방식으로 입력값을 전달하며 실제 서버에 저장하지 않습니다. 실제 비밀번호나 민감한 개인정보를 입력하지 마세요.</small></p>
 
         <fieldset>
           <legend>계정 정보</legend>
@@ -131,13 +131,13 @@
         </fieldset>
 
         <div class="form-actions">
-          <button type="submit">회원가입</button>
+          <button type="submit">폼 제출하기</button>
           <button type="reset">다시 작성</button>
         </div>
       </form>
     </main>
     <footer class="site-footer container">
-      <small>이 페이지는 HTML Form 실습용 회원가입 페이지입니다.</small>
+      <small>HTML Form Demo · SKALA Front-End Portfolio</small>
     </footer>
   </body>
 </html>
