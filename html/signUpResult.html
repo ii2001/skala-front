@@ -6,14 +6,16 @@
     <meta name="description" content="HTML GET 방식의 폼 제출 흐름과 다음 이동 경로를 안내하는 데모 페이지입니다.">
     <title>폼 제출 완료</title>
     <script src="../script/theme.js"></script>
+    <script src="../script/motion.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="../css/style.css">
   </head>
   <body class="page-sign-up-result">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
     <header class="site-header container">
       <h1>폼 제출이 완료되었습니다</h1>
       <p>이 페이지는 HTML GET 방식의 폼 전송 흐름을 보여주는 데모입니다.</p>
-      <button class="theme-toggle" type="button" aria-pressed="false" hidden>다크 테마 사용</button>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html">메인</a></li>
@@ -25,10 +27,13 @@
         </ul>
       </nav>
     </header>
-    <main class="site-main container">
-      <article class="result-card">
+    <main class="site-main container" id="main-content">
+      <article class="result-card reveal">
         <h2>폼 제출 결과</h2>
-        <p class="success-message"><strong>HTML 폼 제출 흐름을 성공적으로 확인했습니다.</strong></p>
+        <p class="success-message">
+          <span class="success-check" aria-hidden="true">✓</span>
+          <strong>HTML 폼 제출 흐름을 성공적으로 확인했습니다.</strong>
+        </p>
         <p>입력 정보는 실제 회원 서비스에 저장되지 않습니다.</p>
 
         <p>데모 확인 후 다음 항목을 살펴보세요.</p>

@@ -5,6 +5,8 @@ const scheduleWeekList = document.getElementById("schedule-week-list");
 const scheduleStatus = document.getElementById("schedule-status");
 const scheduleCaption = document.getElementById("schedule-caption");
 const scheduleBody = document.getElementById("schedule-body");
+const scheduleWeekPosition = document.getElementById("schedule-week-position");
+const scheduleWeekTotal = document.getElementById("schedule-week-total");
 
 const scheduleKindLabels = {
   course: "수업",
@@ -71,7 +73,7 @@ function getMonthDay(date) {
 }
 
 function createWeekDay(schedule) {
-  const item = document.createElement("li");
+  const item = document.createElement("span");
   const date = document.createElement("time");
   const day = createTextElement("span", schedule.day);
   const monthDay = createTextElement("strong", getMonthDay(schedule.date));
@@ -93,15 +95,20 @@ function createWeekDay(schedule) {
 
 function createWeekCard(group) {
   const item = document.createElement("li");
+  const button = document.createElement("button");
   const title = createTextElement("strong", `${group.week}주차`, "schedule-week-card-title");
-  const range = document.createElement("p");
+  const range = document.createElement("span");
   const startDate = createTextElement("time", getMonthDay(group.schedules[0].date));
   const endDate = createTextElement("time", getMonthDay(group.schedules.at(-1).date));
-  const days = document.createElement("ol");
+  const days = document.createElement("span");
 
-  item.id = `schedule-week-${group.week}`;
-  item.className = "schedule-week-card";
-  item.dataset.week = String(group.week);
+  item.className = "schedule-week-slide";
+  button.id = `schedule-week-${group.week}`;
+  button.className = "schedule-week-card";
+  button.type = "button";
+  button.tabIndex = -1;
+  button.dataset.week = String(group.week);
+  button.setAttribute("aria-label", `${group.week}주차 ${getMonthDay(group.schedules[0].date)}부터 ${getMonthDay(group.schedules.at(-1).date)}까지 일정 보기`);
   startDate.dateTime = group.schedules[0].date;
   endDate.dateTime = group.schedules.at(-1).date;
   range.className = "schedule-week-range";
@@ -113,10 +120,11 @@ function createWeekCard(group) {
   }
 
   if (group.schedules.some((schedule) => schedule.date === currentDate)) {
-    item.classList.add("has-today");
+    button.classList.add("has-today");
   }
 
-  item.append(title, range, days);
+  button.append(title, range, days);
+  item.append(button);
   return item;
 }
 
@@ -157,8 +165,9 @@ function createScheduleRow(schedule, weekRowspan = 0) {
     row.append(weekHeader);
   }
 
-  const dateCell = document.createElement("td");
+  const dateCell = document.createElement("th");
   const date = createTextElement("time", schedule.date);
+  dateCell.scope = "row";
   date.dateTime = schedule.date;
   dateCell.append(date);
 
@@ -191,6 +200,7 @@ function renderSchedule(selectedWeek) {
   if (selectedSchedules.length === 0) {
     renderEmptySchedule();
     scheduleStatus.textContent = `${selectedLabel}에는 등록된 일정이 없습니다.`;
+    scheduleBody.classList.remove("schedule-content-enter");
     return;
   }
 
@@ -204,6 +214,9 @@ function renderSchedule(selectedWeek) {
   }
 
   scheduleBody.replaceChildren(rows);
+  scheduleBody.classList.remove("schedule-content-enter");
+  void scheduleBody.offsetWidth;
+  scheduleBody.classList.add("schedule-content-enter");
   const todayNotice = selectedSchedules.some((schedule) => schedule.date === currentDate)
     ? " 오늘 날짜는 주차별 날짜 카드에서 강조했습니다."
     : "";
@@ -217,6 +230,8 @@ function initializeClassSchedule() {
     || scheduleStatus === null
     || scheduleCaption === null
     || scheduleBody === null
+    || scheduleWeekPosition === null
+    || scheduleWeekTotal === null
   ) {
     return;
   }
@@ -224,24 +239,39 @@ function initializeClassSchedule() {
   const weekGroups = groupSchedulesByWeek(classSchedule);
   const initialWeek = getInitialWeek();
   let activeWeek = null;
+  let renderedWeek = null;
   let scrollFrame = 0;
+  let scrollTimer = 0;
 
   scheduleWeekList.replaceChildren(...weekGroups.map(createWeekCard));
+  scheduleWeekTotal.textContent = String(classScheduleMeta.totalWeeks);
 
   function getWeekCard(week) {
     return scheduleWeekList.querySelector(`[data-week="${week}"]`);
   }
 
-  function activateWeek(week, shouldScroll = false) {
+  function getWeekCards() {
+    return scheduleWeekList.querySelectorAll(".schedule-week-card");
+  }
+
+  function scrollToWeekCard(card, behavior = "auto") {
+    const scrollerBounds = scheduleWeekScroller.getBoundingClientRect();
+    const cardBounds = card.getBoundingClientRect();
+    const targetLeft = scheduleWeekScroller.scrollLeft + cardBounds.left - scrollerBounds.left;
+    scheduleWeekScroller.scrollTo({ left: targetLeft, behavior });
+  }
+
+  function updateActiveWeek(week) {
     const targetCard = getWeekCard(week);
 
     if (targetCard === null) {
-      return;
+      return false;
     }
 
-    for (const card of scheduleWeekList.children) {
+    for (const card of getWeekCards()) {
       const isActive = card === targetCard;
       card.classList.toggle("is-active", isActive);
+      card.tabIndex = isActive ? 0 : -1;
 
       if (isActive) {
         card.setAttribute("aria-current", "true");
@@ -250,13 +280,33 @@ function initializeClassSchedule() {
       }
     }
 
-    if (activeWeek !== week) {
-      activeWeek = week;
+    activeWeek = week;
+    const activeIndex = weekGroups.findIndex((group) => group.week === week);
+    scheduleWeekPosition.textContent = String(activeIndex + 1);
+    return true;
+  }
+
+  function commitWeek(week, options = {}) {
+    const { shouldScroll = false, shouldFocus = false } = options;
+
+    if (!updateActiveWeek(week)) {
+      return;
+    }
+
+    const targetCard = getWeekCard(week);
+
+    if (renderedWeek !== week) {
+      renderedWeek = week;
       renderSchedule(week);
     }
 
-    if (shouldScroll) {
-      targetCard.scrollIntoView({ behavior: "auto", block: "nearest", inline: "start" });
+    if (shouldScroll && targetCard !== null) {
+      const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
+      scrollToWeekCard(targetCard, behavior);
+    }
+
+    if (shouldFocus && targetCard !== null) {
+      targetCard.focus({ preventScroll: true });
     }
   }
 
@@ -265,7 +315,7 @@ function initializeClassSchedule() {
     let closestWeek = activeWeek;
     let closestDistance = Number.POSITIVE_INFINITY;
 
-    for (const card of scheduleWeekList.children) {
+    for (const card of getWeekCards()) {
       const cardBounds = card.getBoundingClientRect();
       const distance = Math.abs(scrollerBounds.left - cardBounds.left);
 
@@ -279,31 +329,71 @@ function initializeClassSchedule() {
   }
 
   scheduleWeekScroller.addEventListener("scroll", () => {
+    window.clearTimeout(scrollTimer);
+
     if (scrollFrame !== 0) {
+      scrollTimer = window.setTimeout(() => {
+        commitWeek(getClosestWeek());
+      }, 160);
       return;
     }
 
     scrollFrame = window.requestAnimationFrame(() => {
       scrollFrame = 0;
-      activateWeek(getClosestWeek());
+      updateActiveWeek(getClosestWeek());
     });
+
+    scrollTimer = window.setTimeout(() => {
+      commitWeek(getClosestWeek());
+    }, 160);
   }, { passive: true });
 
+  scheduleWeekList.addEventListener("click", (event) => {
+    const target = event.target;
+
+    if (!(target instanceof Element)) {
+      return;
+    }
+
+    const card = target.closest(".schedule-week-card");
+
+    if (card === null || !scheduleWeekList.contains(card)) {
+      return;
+    }
+
+    commitWeek(Number(card.dataset.week), { shouldScroll: true });
+  });
+
   scheduleWeekScroller.addEventListener("keydown", (event) => {
-    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+    const navigationKeys = ["ArrowLeft", "ArrowRight", "Home", "End"];
+
+    if (!navigationKeys.includes(event.key)) {
       return;
     }
 
     event.preventDefault();
     const currentIndex = weekGroups.findIndex((group) => group.week === activeWeek);
-    const direction = event.key === "ArrowRight" ? 1 : -1;
-    const nextIndex = Math.min(Math.max(currentIndex + direction, 0), weekGroups.length - 1);
-    activateWeek(weekGroups[nextIndex].week, true);
+    let nextIndex = currentIndex;
+
+    if (event.key === "Home") {
+      nextIndex = 0;
+    } else if (event.key === "End") {
+      nextIndex = weekGroups.length - 1;
+    } else {
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      nextIndex = Math.min(Math.max(currentIndex + direction, 0), weekGroups.length - 1);
+    }
+
+    commitWeek(weekGroups[nextIndex].week, { shouldScroll: true, shouldFocus: true });
   });
 
-  activateWeek(initialWeek);
+  commitWeek(initialWeek);
   window.requestAnimationFrame(() => {
-    getWeekCard(initialWeek)?.scrollIntoView({ behavior: "auto", block: "nearest", inline: "start" });
+    const initialCard = getWeekCard(initialWeek);
+
+    if (initialCard !== null) {
+      scrollToWeekCard(initialCard);
+    }
   });
 }
 

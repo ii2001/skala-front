@@ -24,7 +24,7 @@ function initializeWeather() {
   let latestRequestId = 0;
 
   function renderWeatherState(stateClass, ...content) {
-    weatherBox.classList.remove("weather-loading", "weather-error", "weather-data");
+    weatherBox.classList.remove("weather-loading", "weather-error", "weather-data", "weather-state-enter");
     weatherBox.setAttribute("aria-busy", stateClass === "weather-loading" ? "true" : "false");
 
     if (stateClass !== "") {
@@ -32,6 +32,8 @@ function initializeWeather() {
     }
 
     weatherBox.replaceChildren(...content);
+    void weatherBox.offsetWidth;
+    weatherBox.classList.add("weather-state-enter");
   }
 
   function renderInitialMessage() {
@@ -42,7 +44,11 @@ function initializeWeather() {
   function renderLoading(cityName, latitude, longitude) {
     const title = createTextElement("h4", `${cityName} 날씨 확인 중`);
     const location = createTextElement("p", `위도: ${latitude}, 경도: ${longitude}`);
-    const message = createTextElement("p", "로딩 중… ⏳");
+    const message = document.createElement("p");
+    const indicator = createTextElement("span", "•••");
+    indicator.className = "weather-loading-indicator";
+    indicator.setAttribute("aria-hidden", "true");
+    message.append("날씨 데이터를 불러오는 중", indicator);
     renderWeatherState("weather-loading", title, location, message);
   }
 
@@ -57,13 +63,17 @@ function initializeWeather() {
     renderWeatherState("weather-data", title, weatherData);
   }
 
-  function renderError(cityName) {
+  function renderError(cityName, retryWeather) {
     const title = createTextElement("h4", `${cityName} 날씨를 불러오지 못했습니다`);
     const message = createTextElement("p", "잠시 후 다시 시도하거나 다른 도시를 선택해 주세요.");
-    renderWeatherState("weather-error", title, message);
+    const retryButton = createTextElement("button", `${cityName} 날씨 다시 불러오기`);
+    retryButton.className = "weather-retry";
+    retryButton.type = "button";
+    retryButton.addEventListener("click", retryWeather);
+    renderWeatherState("weather-error", title, message, retryButton);
   }
 
-  citySelect.addEventListener("change", async () => {
+  async function loadSelectedWeather() {
     latestRequestId += 1;
     const requestId = latestRequestId;
 
@@ -106,13 +116,15 @@ function initializeWeather() {
       }
 
       console.error("날씨 정보를 가져오는 중 오류가 발생했습니다.", error);
-      renderError(cityName);
+      renderError(cityName, loadSelectedWeather);
     } finally {
       if (requestId === latestRequestId && controller === activeController) {
         activeController = null;
       }
     }
-  });
+  }
+
+  citySelect.addEventListener("change", loadSelectedWeather);
 
   renderInitialMessage();
 }

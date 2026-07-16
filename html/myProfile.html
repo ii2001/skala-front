@@ -6,14 +6,16 @@
     <meta name="description" content="SKALA에서 개발을 학습하며 쌓아 온 관심사와 강점, 기술, 개발 목표를 소개하는 포트폴리오 About 페이지입니다.">
     <title>나의 소개 | SKALA Front-End Portfolio</title>
     <script src="../script/theme.js"></script>
+    <script src="../script/motion.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="../css/style.css">
   </head>
   <body class="page-profile">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
     <header class="site-header container">
       <h1>안녕하세요! 저를 소개합니다</h1>
       <p>SKALA에서 배우며 쌓아 온 관심사와 강점, 현재 학습 중인 기술과 개발 목표를 소개합니다.</p>
-      <button class="theme-toggle" type="button" aria-pressed="false" hidden>다크 테마 사용</button>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html">메인</a></li>
@@ -25,14 +27,14 @@
         </ul>
       </nav>
     </header>
-    <main class="site-main container">
-      <article>
-        <section>
+    <main id="main-content" class="site-main container">
+      <article class="profile-grid">
+        <section class="profile-card profile-card--wide profile-intro reveal">
           <h2>기본 소개</h2>
           <p>현재 SKALA에서 <strong>풀스택 개발</strong>을 학습하며 개발 역량을 차근차근 쌓고 있습니다.</p>
           <p>프로그래밍을 통해 새로운 것을 만들고, 논리적으로 문제를 해결하는 과정에 관심이 많습니다.</p>
         </section>
-        <section>
+        <section class="profile-card profile-foods reveal">
           <h2>내가 좋아하는 음식</h2>
           <ul>
             <li>소고기와 스테이크: 풍부한 육즙과 고소한 맛을 좋아합니다.</li>
@@ -42,7 +44,7 @@
             <li>커피와 디저트: 달콤한 디저트와 향긋한 커피를 함께 즐기면 여유를 느낄 수 있습니다.</li>
           </ul>
         </section>
-        <section>
+        <section class="profile-card profile-goals reveal reveal-delay-1">
           <h2>올해 할 일</h2>
           <ol>
             <li>SKALA 교육과정 성실하게 수료하기</li>
@@ -52,9 +54,9 @@
             <li>개발 포트폴리오 정리하기</li>
           </ol>
         </section>
-        <section>
+        <section class="profile-card profile-traits reveal">
           <h2>나를 설명하는 단어들</h2>
-          <dl>
+          <dl class="trait-list">
             <dt>호기심</dt>
             <dd>새로운 기술과 원리를 접하면 직접 알아보고 시도하는 것을 좋아합니다.</dd>
             <dt>꾸준함</dt>
@@ -67,11 +69,11 @@
             <dd>피드백을 열린 마음으로 받아들이고 더 나은 방법을 배우며 성장하고자 합니다.</dd>
           </dl>
         </section>
-        <section>
+        <section class="profile-card profile-skills reveal reveal-delay-1">
           <h2>현재 학습 중인 기술</h2>
           <details>
             <summary>학습 중인 기술 자세히 보기</summary>
-            <ul>
+            <ul class="skill-list">
               <li><abbr title="HyperText Markup Language">HTML</abbr></li>
               <li><abbr title="Cascading Style Sheets">CSS</abbr></li>
               <li><abbr title="웹 페이지에 동작을 추가하는 프로그래밍 언어">JavaScript</abbr></li>
@@ -85,7 +87,7 @@
           </p>
           <p>표시된 100%는 기술 숙련도나 평가점수가 아니라 현재 포트폴리오 프로젝트의 구현 진행 상황을 나타냅니다.</p>
         </section>
-        <section>
+        <section class="profile-card profile-card--wide profile-principle reveal">
           <h2>개발자로서의 목표</h2>
           <p><strong>사용자 경험을 고려하고 사용자가 겪는 문제에 실질적인 해결책을 만드는 개발자</strong>가 되고 싶습니다.</p>
           <p>단순히 코드를 작성하는 데 그치지 않고 동료와 원활하게 협업하며, 읽기 쉽고 유지보수하기 좋은 결과물을 만드는 것을 목표로 합니다.</p>

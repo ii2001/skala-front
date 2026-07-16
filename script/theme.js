@@ -31,8 +31,12 @@
 
   function updateToggle(button) {
     const isDark = root.dataset.theme === "dark";
+    const actionLabel = isDark ? "라이트 테마 사용" : "다크 테마 사용";
+    const currentTheme = isDark ? "다크" : "라이트";
 
-    button.setAttribute("aria-pressed", String(isDark));
+    button.dataset.themeState = isDark ? "dark" : "light";
+    button.setAttribute("aria-label", `현재 ${currentTheme} 테마입니다. ${actionLabel}`);
+    button.textContent = actionLabel;
     button.hidden = false;
   }
 

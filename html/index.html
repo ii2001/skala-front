@@ -6,15 +6,17 @@
     <meta name="description" content="HTML, CSS, JavaScript로 구현한 프런트엔드 학습 프로젝트와 인터랙티브 기능을 소개합니다.">
     <title>Welcome SKALA</title>
     <script src="../script/theme.js"></script>
+    <script src="../script/motion.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="../css/style.css">
   </head>
   <body class="page-index">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
     <header class="site-header container portal-header">
       <h1>환영인사</h1>
       <p>스칼라에 오신 것을 환영합니다.</p>
       <p>HTML, CSS, JavaScript로 구현한 프런트엔드 프로젝트와 인터랙티브 기능을 소개합니다.</p>
-      <button class="theme-toggle" type="button" aria-pressed="false" hidden>다크 테마 사용</button>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html" aria-current="page">메인</a></li>
@@ -26,21 +28,78 @@
         </ul>
       </nav>
     </header>
-    <main class="site-main container">
+    <main class="site-main container" id="main-content">
       <div class="portal-layout">
-        <section aria-labelledby="portal-heading">
-          <h2 id="portal-heading">프로젝트 둘러보기</h2>
-          <nav aria-label="프로젝트 페이지 바로가기">
-            <ul class="portal-grid">
-              <li><a class="portal-card" href="holiday.html">휴일 일과</a></li>
-              <li><a class="portal-card" href="myProfile.html">나의 소개</a></li>
-              <li><a class="portal-card" href="myClass.html">학습 일정</a></li>
-              <li><a class="portal-card" href="myTrip.html">여행지</a></li>
-              <li><a class="portal-card" href="signUp.html">폼 UI 데모</a></li>
-            </ul>
-          </nav>
-        </section>
-        <aside class="learning-status" aria-label="학습 및 실시간 정보">
+        <div class="portal-primary">
+          <section class="portal-projects" aria-labelledby="portal-heading">
+            <h2 id="portal-heading">프로젝트 둘러보기</h2>
+            <nav aria-label="프로젝트 페이지 바로가기">
+              <ul class="portal-grid">
+                <li>
+                  <a class="portal-card reveal-on-scroll" href="holiday.html">
+                    <strong>휴일 일과</strong>
+                    <small>시간 요소와 체크리스트로 구성한 휴일 루틴</small>
+                  </a>
+                </li>
+                <li>
+                  <a class="portal-card reveal-on-scroll" href="myProfile.html">
+                    <strong>나의 소개</strong>
+                    <small>학습 기술과 개발 목표를 담은 프로필</small>
+                  </a>
+                </li>
+                <li>
+                  <a class="portal-card reveal-on-scroll" href="myClass.html">
+                    <strong>학습 일정</strong>
+                    <small>SKALA 4반의 주차별 교육 일정</small>
+                  </a>
+                </li>
+                <li>
+                  <a class="portal-card reveal-on-scroll" href="myTrip.html">
+                    <strong>여행지</strong>
+                    <small>이미지·오디오·영상으로 소개하는 제주도</small>
+                  </a>
+                </li>
+                <li>
+                  <a class="portal-card reveal-on-scroll" href="signUp.html">
+                    <strong>폼 UI 데모</strong>
+                    <small>HTML 유효성 검사를 활용한 회원가입 폼</small>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </section>
+          <section class="javascript-practice reveal-on-scroll" aria-labelledby="javascript-practice-heading">
+            <h2 id="javascript-practice-heading">JavaScript 미니 프로젝트</h2>
+            <p>버튼을 눌러 숫자 맞추기, 성적 계산, 가방 목록 출력 기능을 직접 실행해 보세요.</p>
+            <div class="practice-grid">
+              <article class="practice-card" aria-labelledby="up-down-heading">
+                <h3 id="up-down-heading">Up-Down 숫자 맞추기</h3>
+                <p>1부터 50 사이의 숫자를 입력하고 Up과 Down 안내에 따라 정답을 맞혀 보세요.</p>
+                <button type="button" id="up-down-start" aria-controls="up-down-status">Up-Down 게임 시작하기</button>
+                <div class="practice-result" id="up-down-status" aria-live="polite" aria-atomic="true">
+                  게임을 시작하면 결과가 여기에 표시됩니다.
+                </div>
+              </article>
+              <article class="practice-card" aria-labelledby="grade-heading">
+                <h3 id="grade-heading">성적 계산기</h3>
+                <p>HTML, CSS, JavaScript 점수를 입력해 총점, 평균, 등급과 합격 여부를 확인하세요.</p>
+                <button type="button" id="grade-start" aria-controls="grade-result">성적 계산 시작하기</button>
+                <div class="practice-result" id="grade-result" aria-live="polite" aria-atomic="true">
+                  점수 입력을 마치면 계산 결과가 여기에 표시됩니다.
+                </div>
+              </article>
+              <article class="practice-card" aria-labelledby="bag-heading">
+                <h3 id="bag-heading">내 가방 보기</h3>
+                <p>SKALA 개발 교육에 챙겨 다니는 소지품과 전체 수량을 목록으로 확인하세요.</p>
+                <button type="button" id="bag-show" aria-controls="bag-result">내 가방 내용 보기</button>
+                <div class="practice-result" id="bag-result" aria-live="polite" aria-atomic="true">
+                  버튼을 누르면 가방 속 물품 목록이 여기에 표시됩니다.
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+        <aside class="learning-status reveal-on-scroll" aria-labelledby="learning-status-heading">
           <h2 id="learning-status-heading">현재 학습 목표</h2>
           <p>시맨틱 HTML과 반응형 CSS로 의미가 분명하고 다양한 화면에 대응하는 페이지를 구현했습니다.</p>
           <p>Vanilla JavaScript와 API 연동으로 인터랙티브 기능을 구현하고 웹 접근성을 함께 고려했습니다.</p>
@@ -62,36 +121,6 @@
           </section>
         </aside>
       </div>
-      <section class="javascript-practice" aria-labelledby="javascript-practice-heading">
-        <h2 id="javascript-practice-heading">JavaScript 미니 프로젝트</h2>
-        <p>버튼을 눌러 숫자 맞추기, 성적 계산, 가방 목록 출력 기능을 직접 실행해 보세요.</p>
-        <div class="practice-grid">
-          <article class="practice-card" aria-labelledby="up-down-heading">
-            <h3 id="up-down-heading">Up-Down 숫자 맞추기</h3>
-            <p>1부터 50 사이의 숫자를 입력하고 Up과 Down 안내에 따라 정답을 맞혀 보세요.</p>
-            <button type="button" id="up-down-start" aria-controls="up-down-status">Up-Down 게임 시작하기</button>
-            <div class="practice-result" id="up-down-status" aria-live="polite" aria-atomic="true">
-              게임을 시작하면 결과가 여기에 표시됩니다.
-            </div>
-          </article>
-          <article class="practice-card" aria-labelledby="grade-heading">
-            <h3 id="grade-heading">성적 계산기</h3>
-            <p>HTML, CSS, JavaScript 점수를 입력해 총점, 평균, 등급과 합격 여부를 확인하세요.</p>
-            <button type="button" id="grade-start" aria-controls="grade-result">성적 계산 시작하기</button>
-            <div class="practice-result" id="grade-result" aria-live="polite" aria-atomic="true">
-              점수 입력을 마치면 계산 결과가 여기에 표시됩니다.
-            </div>
-          </article>
-          <article class="practice-card" aria-labelledby="bag-heading">
-            <h3 id="bag-heading">내 가방 보기</h3>
-            <p>SKALA 개발 교육에 챙겨 다니는 소지품과 전체 수량을 목록으로 확인하세요.</p>
-            <button type="button" id="bag-show" aria-controls="bag-result">내 가방 내용 보기</button>
-            <div class="practice-result" id="bag-result" aria-live="polite" aria-atomic="true">
-              버튼을 누르면 가방 속 물품 목록이 여기에 표시됩니다.
-            </div>
-          </article>
-        </div>
-      </section>
     </main>
     <footer class="site-footer container">
       <small>© 2026 SKALA Front-End Portfolio</small>

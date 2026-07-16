@@ -6,14 +6,16 @@
     <meta name="description" content="여유로운 아침부터 편안한 저녁까지 개인 휴일 루틴과 체크리스트를 소개하는 페이지입니다.">
     <title>나의 휴일 일과 | SKALA Front-End Portfolio</title>
     <script src="../script/theme.js"></script>
+    <script src="../script/motion.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="../css/style.css">
   </head>
   <body class="page-holiday">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
     <header class="site-header container">
       <h1>나의 휴일 일과</h1>
       <p>휴일을 여유롭고 알차게 보내는 하루의 흐름을 소개합니다.</p>
-      <button class="theme-toggle" type="button" aria-pressed="false" hidden>다크 테마 사용</button>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html">메인</a></li>
@@ -25,10 +27,10 @@
         </ul>
       </nav>
     </header>
-    <main class="site-main container">
-      <section>
+    <main id="main-content" class="site-main container">
+      <section class="routine-card routine-card--morning reveal">
         <h2>여유로운 아침</h2>
-        <ol>
+        <ol class="routine-list">
           <li>
             <p>
               <time datetime="09:00">09:00</time> <strong>늦잠 후 기상</strong><br>
@@ -49,9 +51,9 @@
           </li>
         </ol>
       </section>
-      <section>
+      <section class="routine-card routine-card--afternoon reveal reveal-delay-1">
         <h2>생산적인 오후</h2>
-        <ol>
+        <ol class="routine-list">
           <li>
             <p>
               <time datetime="13:00">13:00</time> <strong>헬스장에서 운동하기</strong><br>
@@ -72,9 +74,9 @@
           </li>
         </ol>
       </section>
-      <section>
+      <section class="routine-card routine-card--evening reveal reveal-delay-2">
         <h2>편안한 저녁</h2>
-        <ol>
+        <ol class="routine-list">
           <li>
             <p>
               <time datetime="19:00">19:00</time> <strong>저녁 식사하기</strong><br>
@@ -95,7 +97,7 @@
           </li>
         </ol>
       </section>
-      <aside>
+      <aside class="holiday-checklist reveal">
         <h2>휴일 체크리스트</h2>
         <p>휴일 일정을 알차게 보내기 위해 함께 확인할 목표입니다.</p>
         <details>

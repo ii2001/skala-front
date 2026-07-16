@@ -6,14 +6,17 @@
     <meta name="description" content="제주도의 자연과 음식, 추천 일정과 로컬 이미지·오디오·비디오를 함께 소개하는 멀티미디어 여행 프로젝트입니다.">
     <title>제주도 여행 프로젝트 | SKALA Front-End Portfolio</title>
     <script src="../script/theme.js"></script>
+    <script src="../script/motion.js"></script>
+    <script src="../script/tripGallery.js" defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap">
     <link rel="stylesheet" href="../css/style.css">
   </head>
   <body class="page-trip">
+    <a class="skip-link" href="#main-content">본문 바로가기</a>
     <header class="site-header container">
       <h1>나의 여행지, 제주도</h1>
       <p>아름다운 자연 속에서 여유롭게 쉬며 다양한 풍경을 경험하고 싶어 제주도를 선택했습니다.</p>
-      <button class="theme-toggle" type="button" aria-pressed="false" hidden>다크 테마 사용</button>
+      <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
       <nav class="site-nav" aria-label="주요 페이지">
         <ul class="nav-list">
           <li><a href="index.html">메인</a></li>
@@ -25,19 +28,20 @@
         </ul>
       </nav>
     </header>
-    <main class="site-main container">
+    <main class="site-main container" id="main-content">
       <article>
-        <div class="trip-grid">
-          <section class="trip-card">
+        <div class="trip-grid trip-grid--mosaic">
+          <section class="trip-card trip-card--featured reveal">
             <h2>제주도 소개</h2>
             <p>제주도는 푸른 바다와 독특한 화산 지형, 곳곳에 자리한 오름이 어우러져 다채로운 자연을 만날 수 있는 섬입니다.</p>
-            <figure>
-              <img src="../media/images/trip-main.jpg" alt="검은 현무암 해안과 푸른 바다, 바위섬이 함께 보이는 제주 풍경" loading="lazy">
+            <figure class="trip-figure">
+              <img src="../media/images/trip-main.jpg" alt="검은 현무암 해안과 푸른 바다, 바위섬이 함께 보이는 제주 풍경" width="3120" height="1760" fetchpriority="high">
+              <button class="trip-gallery-open" type="button" aria-label="제주 현무암 해안 풍경 크게 보기" aria-haspopup="dialog" aria-controls="trip-lightbox" hidden>크게 보기</button>
               <figcaption>현무암 해안과 바위섬이 어우러진 제주 바다 풍경</figcaption>
             </figure>
           </section>
 
-          <section class="trip-card">
+          <section class="trip-card trip-card--wish-list reveal reveal-delay-1">
             <h2>제주도에서 하고 싶은 일</h2>
             <ul>
               <li>성산일출봉에서 일출 보기</li>
@@ -48,19 +52,21 @@
             </ul>
           </section>
 
-          <section class="trip-card">
+          <section class="trip-card trip-card--gallery reveal reveal-delay-2">
             <h2>여행 사진</h2>
-            <figure>
-              <img src="../media/images/trip-food.jpg" alt="제주 음식과 디저트에 활용되는 주황색 감귤이 열린 과수원" loading="lazy">
+            <figure class="trip-figure">
+              <img src="../media/images/trip-food.jpg" alt="제주 음식과 디저트에 활용되는 주황색 감귤이 열린 과수원" width="4928" height="7392" loading="lazy">
+              <button class="trip-gallery-open" type="button" aria-label="제주 감귤 과수원 풍경 크게 보기" aria-haspopup="dialog" aria-controls="trip-lightbox" hidden>크게 보기</button>
               <figcaption>제주 음식과 디저트에 활용되는 감귤이 익어 가는 과수원</figcaption>
             </figure>
-            <figure>
-              <img src="../media/images/trip-view.jpg" alt="제주 해안 마을과 방파제 너머로 푸른 바다가 펼쳐진 풍경" loading="lazy">
+            <figure class="trip-figure">
+              <img src="../media/images/trip-view.jpg" alt="제주 해안 마을과 방파제 너머로 푸른 바다가 펼쳐진 풍경" width="4117" height="2734" loading="lazy">
+              <button class="trip-gallery-open" type="button" aria-label="제주 해안 마을 풍경 크게 보기" aria-haspopup="dialog" aria-controls="trip-lightbox" hidden>크게 보기</button>
               <figcaption>제주 해안 마을과 푸른 바다가 어우러진 풍경</figcaption>
             </figure>
           </section>
 
-          <section class="trip-card">
+          <section class="trip-card trip-card--audio reveal">
             <h2>제주도의 소리</h2>
             <p>잔잔한 파도와 바람이 어우러진 제주 바다의 소리를 들으며 여행의 분위기를 느껴 보세요.</p>
             <audio controls preload="metadata">
@@ -69,16 +75,16 @@
             </audio>
           </section>
 
-          <section class="trip-card">
+          <section class="trip-card trip-card--video reveal reveal-delay-1">
             <h2>제주도 여행 영상</h2>
             <p>제주도의 바다와 오름을 따라 이동하며 만나는 여행 풍경을 영상으로 감상해 보세요.</p>
-            <video controls preload="metadata">
+            <video controls preload="metadata" poster="../media/images/trip-view.jpg">
               <source src="../media/video/trip-video.mp4" type="video/mp4">
               사용 중인 브라우저에서는 동영상 재생을 지원하지 않습니다.
             </video>
           </section>
 
-          <section class="trip-card">
+          <section class="trip-card trip-card--itinerary reveal reveal-delay-2">
             <h2>추천 여행 일정</h2>
             <ol>
               <li>아침에 성산일출봉 방문</li>
@@ -90,7 +96,7 @@
         </div>
       </article>
 
-      <aside>
+      <aside class="reveal">
         <h2>여행 전 확인사항</h2>
         <details>
           <summary>준비물 확인하기</summary>
@@ -104,11 +110,24 @@
         </details>
       </aside>
 
-      <nav aria-label="여행 페이지 이동">
+      <nav class="reveal reveal-delay-1" aria-label="여행 페이지 이동">
         <ul>
           <li><a href="index.html">메인 페이지로 돌아가기</a></li>
         </ul>
       </nav>
+
+      <dialog class="trip-lightbox" id="trip-lightbox" aria-labelledby="trip-lightbox-title" aria-describedby="trip-lightbox-description">
+        <article class="trip-lightbox-content">
+          <header class="trip-lightbox-header">
+            <h2 id="trip-lightbox-title">제주 여행 사진 크게 보기</h2>
+            <button class="trip-lightbox-close" type="button">닫기</button>
+          </header>
+          <figure>
+            <img id="trip-lightbox-image" src="../media/images/trip-main.jpg" alt="검은 현무암 해안과 푸른 바다, 바위섬이 함께 보이는 제주 풍경" width="3120" height="1760">
+            <figcaption id="trip-lightbox-description">선택한 제주 여행 풍경을 크게 보여 줍니다.</figcaption>
+          </figure>
+        </article>
+      </dialog>
     </main>
     <footer class="site-footer container">
       <small>Multimedia Travel Project · SKALA Front-End Portfolio</small>
