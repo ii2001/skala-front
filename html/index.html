@@ -40,12 +40,45 @@
         <aside class="learning-status" aria-labelledby="learning-status-heading">
           <h2 id="learning-status-heading">현재 학습 목표</h2>
           <p>시맨틱 HTML로 각 페이지의 의미와 구조를 분명하게 구성하고 있습니다.</p>
-          <p>공통 스타일과 반응형 레이아웃을 적용했으며, 다음 단계에서는 동적인 웹 기능을 학습할 예정입니다.</p>
+          <p>공통 스타일과 반응형 레이아웃을 적용했으며, 이제 JavaScript 기초 기능을 실습하고 있습니다.</p>
         </aside>
       </div>
+      <section class="javascript-practice" aria-labelledby="javascript-practice-heading">
+        <h2 id="javascript-practice-heading">JavaScript 실습</h2>
+        <p>버튼을 눌러 숫자 맞추기, 성적 계산, 가방 목록 출력 기능을 직접 실행해 보세요.</p>
+        <div class="practice-grid">
+          <article class="practice-card" aria-labelledby="up-down-heading">
+            <h3 id="up-down-heading">Up-Down 숫자 맞추기</h3>
+            <p>1부터 50 사이의 숫자를 입력하고 Up과 Down 안내에 따라 정답을 맞혀 보세요.</p>
+            <button type="button" id="up-down-start" aria-controls="up-down-status">Up-Down 게임 시작하기</button>
+            <div class="practice-result" id="up-down-status" aria-live="polite" aria-atomic="true">
+              게임을 시작하면 결과가 여기에 표시됩니다.
+            </div>
+          </article>
+          <article class="practice-card" aria-labelledby="grade-heading">
+            <h3 id="grade-heading">성적 계산기</h3>
+            <p>HTML, CSS, JavaScript 점수를 입력해 총점, 평균, 등급과 합격 여부를 확인하세요.</p>
+            <button type="button" id="grade-start" aria-controls="grade-result">성적 계산 시작하기</button>
+            <div class="practice-result" id="grade-result" aria-live="polite" aria-atomic="true">
+              점수 입력을 마치면 계산 결과가 여기에 표시됩니다.
+            </div>
+          </article>
+          <article class="practice-card" aria-labelledby="bag-heading">
+            <h3 id="bag-heading">내 가방 보기</h3>
+            <p>SKALA 개발 교육에 챙겨 다니는 소지품과 전체 수량을 목록으로 확인하세요.</p>
+            <button type="button" id="bag-show" aria-controls="bag-result">내 가방 내용 보기</button>
+            <div class="practice-result" id="bag-result" aria-live="polite" aria-atomic="true">
+              버튼을 누르면 가방 속 물품 목록이 여기에 표시됩니다.
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
     <footer class="site-footer container">
       <small>SKALA-FRONT HTML 기초 과제</small>
     </footer>
+    <script src="../script/upDown.js" defer></script>
+    <script src="../script/grade.js" defer></script>
+    <script src="../script/bag.js" defer></script>
   </body>
 </html>

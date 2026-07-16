@@ -403,6 +403,104 @@ nav li + li {
   border-top: 0.25rem solid var(--color-accent);
 }
 
+.javascript-practice {
+  margin-top: 1.5rem;
+}
+
+.javascript-practice > p {
+  color: var(--color-text-muted);
+}
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.practice-card {
+  display: flex;
+  min-width: 0;
+  padding: 1.25rem;
+  flex-direction: column;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-primary-soft);
+}
+
+.practice-card h3 {
+  margin-bottom: 0.75rem;
+  color: var(--color-primary-dark);
+}
+
+.practice-card > p {
+  flex-grow: 1;
+  color: var(--color-text-muted);
+}
+
+.practice-card button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 0.0625rem solid var(--color-primary);
+  border-radius: 0.625rem;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    color var(--transition),
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.practice-card button:hover {
+  border-color: var(--color-primary-dark);
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow);
+}
+
+.practice-card button:focus-visible {
+  background: var(--color-primary-dark);
+}
+
+.practice-result {
+  min-height: 5rem;
+  margin-top: 1rem;
+  padding: 0.875rem 1rem;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: 0.625rem;
+  background: var(--color-surface);
+  color: var(--color-text);
+  white-space: pre-line;
+}
+
+.practice-result[data-state="success"] {
+  border-color: var(--color-success);
+  background: var(--color-success-soft);
+  color: var(--color-success);
+}
+
+.practice-result[data-state="notice"] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+}
+
+.practice-result[data-state="warning"] {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.practice-result p {
+  margin-bottom: 0.75rem;
+}
+
+.practice-result ul {
+  padding-left: 1.25rem;
+}
+
 .portal-header h1 {
   animation: fade-in 700ms ease-out both;
 }
@@ -744,6 +842,10 @@ figcaption {
   }
 
   .trip-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .practice-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 
