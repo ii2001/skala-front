@@ -403,6 +403,72 @@ nav li + li {
   border-top: 0.25rem solid var(--color-accent);
 }
 
+.weather-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 0.0625rem solid var(--color-border);
+}
+
+.weather-section h3 {
+  margin-bottom: 0.875rem;
+  color: var(--color-primary-dark);
+}
+
+.weather-controls {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.weather-controls label {
+  font-weight: 700;
+}
+
+.weather-result {
+  min-height: 10rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 0.0625rem solid var(--color-border);
+  border-radius: 0.625rem;
+  background: var(--color-surface);
+}
+
+.weather-result h4 {
+  margin: 0 0 0.75rem;
+  color: var(--color-primary-dark);
+  font-size: 1rem;
+}
+
+.weather-result > :last-child {
+  margin-bottom: 0;
+}
+
+.weather-result.weather-loading {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.weather-result.weather-error {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+
+.weather-result.weather-data {
+  border-color: var(--color-success);
+  background: var(--color-success-soft);
+}
+
+.weather-data-list {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.4rem 0.75rem;
+}
+
+.weather-data-list dd {
+  margin: 0;
+  color: var(--color-text);
+}
+
 .javascript-practice {
   margin-top: 1.5rem;
 }
@@ -613,10 +679,12 @@ legend {
 
 .sign-up-form input:not([type="radio"]):not([type="checkbox"]),
 .sign-up-form select,
-.sign-up-form textarea {
+.sign-up-form textarea,
+.weather-controls select {
   display: block;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   padding: 0.75rem 0.875rem;
   border: 0.0625rem solid #aebccc;
   border-radius: 0.625rem;
@@ -630,6 +698,11 @@ legend {
 .sign-up-form textarea:focus {
   border-color: var(--color-primary);
   outline: none;
+  box-shadow: 0 0 0 0.1875rem rgba(36, 87, 166, 0.2);
+}
+
+.weather-controls select:focus-visible {
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 0.1875rem rgba(36, 87, 166, 0.2);
 }
 
@@ -847,6 +920,15 @@ figcaption {
 
   .practice-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .weather-data-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .weather-data-list dd + dt {
+    margin-top: 0.5rem;
   }
 
   .sign-up-form {
