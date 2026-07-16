@@ -7,10 +7,12 @@
   --color-primary-dark: #173f7c;
   --color-primary-soft: #eaf1fb;
   --color-accent: #c6532f;
+  --color-accent-dark: #a43f24;
   --color-accent-soft: #fff0e9;
   --color-border: #d5deea;
   --color-success: #176b43;
   --color-success-soft: #e8f7ef;
+  --color-focus: #9a6200;
   --radius: 0.875rem;
   --shadow: 0 0.625rem 1.875rem rgba(28, 45, 75, 0.09);
   --shadow-hover: 0 1rem 2.5rem rgba(28, 45, 75, 0.16);
@@ -83,7 +85,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible {
-  outline: 0.1875rem solid #f3a712;
+  outline: 0.1875rem solid var(--color-focus);
   outline-offset: 0.1875rem;
 }
 
@@ -450,7 +452,7 @@ nav li + li {
 .weather-result.weather-error {
   border-color: var(--color-accent);
   background: var(--color-accent-soft);
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 .weather-result.weather-data {
@@ -556,7 +558,7 @@ nav li + li {
 .practice-result[data-state="warning"] {
   border-color: var(--color-accent);
   background: var(--color-accent-soft);
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
 }
 
 .practice-result p {
