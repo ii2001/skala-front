@@ -1,0 +1,390 @@
+/* Responsive layout, reduced motion, and forced-colors overrides */
+
+@media (max-width: 786px) {
+  :root {
+    --topbar-offset: 8.75rem;
+  }
+
+  body {
+    overflow-x: hidden;
+    overflow-x: clip;
+    background-attachment: scroll;
+  }
+
+  .floating-topbar.container {
+    top: max(0.4rem, env(safe-area-inset-top));
+    width: min(calc(100% - 1rem), var(--content-max-width));
+    margin-top: 0.4rem;
+    padding: 0.45rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand theme"
+      "navigation navigation";
+    gap: 0.35rem 0.5rem;
+    border-radius: 1.15rem;
+  }
+
+  .floating-topbar .site-brand {
+    width: fit-content;
+    min-height: 2.45rem;
+    padding: 0.3rem 0.55rem;
+  }
+
+  .floating-topbar .theme-toggle {
+    min-height: 2.45rem;
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  .floating-topbar .site-nav {
+    grid-area: navigation;
+  }
+
+  .floating-topbar .nav-list {
+    display: flex;
+    padding: 0.375rem;
+    grid-template-columns: none;
+    justify-content: flex-start;
+    scroll-snap-type: inline proximity;
+  }
+
+  .floating-topbar .nav-list li {
+    width: auto;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .floating-topbar .nav-list a {
+    width: auto;
+    min-height: 2.5rem;
+    padding: 0.45rem 0.7rem;
+    text-align: center;
+  }
+
+  .back-to-top {
+    right: max(0.85rem, env(safe-area-inset-right));
+    bottom: max(0.85rem, env(safe-area-inset-bottom));
+    width: 3.25rem;
+    min-width: 3.25rem;
+    min-height: 3.25rem;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .container {
+    padding-inline: 1rem;
+  }
+
+  .site-header {
+    display: block;
+    padding: 1.5rem;
+  }
+
+  .portal-header {
+    display: flex;
+    width: min(calc(100% - 1rem), var(--content-max-width));
+    min-height: clamp(29rem, 72svh, 38rem);
+    padding: clamp(1.5rem, 7vw, 2.5rem);
+  }
+
+  .portal-header h1 {
+    font-size: clamp(3.25rem, 18vw, 5.25rem);
+  }
+
+  .portal-header::before {
+    right: -11rem;
+    bottom: -10rem;
+  }
+
+  .hero-metrics {
+    max-width: none;
+    gap: 0.45rem;
+  }
+
+  .hero-metrics li,
+  .hero-metrics li + li {
+    padding: 0.75rem 0.6rem;
+  }
+
+  .hero-metrics small {
+    font-size: 0.68rem;
+  }
+
+  .theme-toggle {
+    margin-top: 1rem;
+  }
+
+  .site-main {
+    padding-block: 1rem 3rem;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 9vw, 2.4rem);
+  }
+
+  h2 {
+    font-size: clamp(1.25rem, 7vw, 1.5rem);
+  }
+
+  .nav-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nav-list li {
+    width: 100%;
+  }
+
+  .nav-list a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .portal-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .learning-status {
+    position: static;
+  }
+
+  .page-holiday .site-main,
+  .page-profile .site-main > article {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile-card--wide {
+    grid-column: auto;
+  }
+
+  .trait-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portal-grid {
+    flex-direction: column;
+  }
+
+  .portal-grid > li {
+    flex-basis: auto;
+  }
+
+  .portal-card {
+    min-height: 7.25rem;
+  }
+
+  .trip-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .trip-card--featured,
+  .trip-card--gallery,
+  .trip-card--video {
+    grid-column: auto;
+  }
+
+  .trip-card--gallery {
+    display: flex;
+  }
+
+  .practice-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portal-primary .practice-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portal-primary .practice-card:last-child {
+    grid-column: auto;
+  }
+
+  .weather-data-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .weather-data-list dd + dt {
+    margin-top: 0.5rem;
+  }
+
+  .sign-up-form {
+    padding: 1rem;
+  }
+
+  .form-step-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  fieldset {
+    padding: 1rem;
+  }
+
+  .form-actions,
+  .result-actions ul,
+  .site-main > nav ul {
+    flex-direction: column;
+  }
+
+  .form-actions button,
+  .result-actions a,
+  .site-main > nav a {
+    width: 100%;
+  }
+
+  img,
+  video,
+  audio {
+    max-width: 100%;
+  }
+
+  .table-scroll {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .schedule-meta {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-auto-flow: row;
+  }
+
+  .schedule-meta dd:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
+
+  .schedule-week-browser {
+    padding: 1rem;
+  }
+
+  .schedule-week-heading {
+    align-items: flex-start;
+  }
+
+  .schedule-week-card {
+    width: 78vw;
+  }
+
+  .schedule-table {
+    min-width: 58rem;
+  }
+
+  .trip-lightbox-header {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-attachment: scroll;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .motion-ready .reveal,
+  .motion-ready .reveal-on-scroll,
+  .motion-ready .reveal.is-revealed,
+  .motion-ready .reveal-on-scroll.is-revealed {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .floating-topbar,
+  .portal-header h1,
+  .portal-header::before,
+  .hero-metrics,
+  .motion-ready .javascript-practice.is-revealed .practice-card,
+  .motion-ready .reveal-on-scroll.is-revealed > h2::after,
+  .motion-ready .reveal-on-scroll.is-revealed > div > h2::after {
+    animation: none !important;
+  }
+
+  .motion-ready .javascript-practice.reveal-on-scroll .practice-card {
+    opacity: 1;
+    clip-path: none;
+  }
+
+  [data-tilt] {
+    transform: none !important;
+    transform-style: flat;
+  }
+
+  .schedule-week-scroller {
+    scroll-snap-type: inline proximity;
+  }
+
+  .nav-list a:hover,
+  .nav-list a:focus-visible,
+  .site-brand:hover,
+  .site-brand:focus-visible,
+  .theme-toggle:hover,
+  .theme-toggle:active,
+  .back-to-top,
+  .back-to-top.is-visible,
+  .back-to-top:hover,
+  .back-to-top:focus-visible,
+  .portal-card:hover,
+  .portal-card:focus-visible,
+  .portal-card:hover::after,
+  .portal-card:focus-visible::after,
+  .trip-card:hover,
+  .trip-card:hover figure img,
+  .trip-gallery-open:hover,
+  .trip-gallery-open:focus-visible,
+  .trip-gallery-open:active,
+  .trip-lightbox-close:active,
+  .practice-card:hover,
+  .practice-card:focus-within,
+  .practice-card:hover::after,
+  .practice-card:focus-within::after,
+  .practice-card button:hover,
+  .practice-card button:active,
+  .form-actions button:hover,
+  .form-actions button:active,
+  .weather-retry:active,
+  .result-actions a:hover,
+  .site-main > nav a:hover {
+    transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .portal-header h1 {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+
+  .floating-topbar,
+  .portal-card,
+  .practice-card,
+  .learning-status,
+  .back-to-top {
+    border: 0.125rem solid CanvasText;
+  }
+
+  .nav-list a[aria-current="page"] {
+    outline: 0.125rem solid LinkText;
+    outline-offset: -0.25rem;
+  }
+
+  body > .page-scroll-progress::-webkit-progress-value {
+    background: Highlight;
+  }
+
+  body > .page-scroll-progress::-moz-progress-bar {
+    background: Highlight;
+  }
+}
