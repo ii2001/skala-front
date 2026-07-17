@@ -35,7 +35,7 @@ export const classSchedule = [
     date: "2026-07-17",
     day: "금",
     week: 1,
-    course: "대체휴일(개천절)",
+    course: "제헌절",
     instructor: "",
     kind: "holiday",
   },

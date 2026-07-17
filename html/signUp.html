@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="입력 항목별 실시간 유효성 안내를 제공하는 SKALA 회원가입 실습 페이지입니다.">
+    <meta name="description" content="입력 항목별 실시간 유효성 안내를 제공하는 SKALA 회원가입 UI 데모 페이지입니다.">
     <title>SKALA 회원가입</title>
     <script src="../script/theme.js"></script>
     <script src="../script/motion.js"></script>
@@ -32,8 +32,8 @@
       <button class="theme-toggle" type="button" hidden>다크 테마 사용</button>
     </div>
     <header class="site-header container">
-      <h1>SKALA 회원가입</h1>
-      <p>HTML 폼 요소와 브라우저 유효성 검사를 연습하는 회원가입 페이지입니다. 입력한 정보는 실제 서버에 저장되지 않습니다.</p>
+      <h1>SKALA 회원가입 UI 데모</h1>
+      <p>HTML 폼 요소와 브라우저 유효성 검사 흐름을 보여 주는 회원가입 UI 데모이며 입력 정보는 실제 서버에 저장되지 않습니다.</p>
     </header>
     <main class="site-main container" id="main-content" tabindex="-1">
       <form class="sign-up-form" action="signUpResult.html" method="get" autocomplete="on">
@@ -65,7 +65,7 @@
             <input type="text" id="userId" name="userId" minlength="4" maxlength="15" required autocomplete="username" placeholder="4~15자 영문 또는 숫자" pattern="[A-Za-z0-9]+" title="4~15자의 영문 또는 숫자만 입력할 수 있습니다." aria-describedby="user-id-help user-id-availability">
             <button class="id-availability-check" type="button" id="user-id-check">아이디 중복 확인</button>
             <small id="user-id-help">4~15자의 영문 또는 숫자만 입력할 수 있습니다.</small>
-            <small id="user-id-availability" class="availability-status" data-state="neutral" aria-live="polite">서버가 없는 과제이므로 데모 목록을 기준으로 중복을 확인합니다.</small>
+            <small id="user-id-availability" class="availability-status" data-state="neutral" aria-live="polite">서버가 없는 정적 데모이므로 예시 목록을 기준으로 중복을 확인합니다.</small>
           </p>
           <p>
             <label for="userPassword">비밀번호</label>
@@ -192,7 +192,7 @@
           </header>
           <section aria-labelledby="privacy-terms-title">
             <h3 id="privacy-terms-title">개인정보 수집 및 이용</h3>
-            <p>이 페이지는 HTML Form 과제용 데모이며 실제 서버에 개인정보를 저장하지 않습니다. 입력 구조와 브라우저 유효성 검사를 연습하기 위한 목적으로만 사용합니다.</p>
+            <p>이 페이지는 HTML Form UI 데모이며 실제 서버에 개인정보를 저장하지 않습니다. HTML 폼 구조와 브라우저 유효성 검사 흐름을 보여 주기 위한 목적으로 사용합니다.</p>
           </section>
           <section aria-labelledby="marketing-terms-title">
             <h3 id="marketing-terms-title">교육 및 행사 안내 수신</h3>
@@ -202,7 +202,7 @@
       </dialog>
     </main>
     <footer class="site-footer container">
-      <small>회원가입 Form · SKALA Front-End Portfolio</small>
+      <small>Sign-Up Form Demo · SKALA Front-End Portfolio</small>
     </footer>
     <button class="back-to-top" type="button" hidden>맨 위로</button>
     <script src="../script/visualEffects.js" defer></script>

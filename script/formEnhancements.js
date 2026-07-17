@@ -129,7 +129,7 @@
 
     if (value === "") {
       confirmedUserId = "";
-      setAvailabilityStatus("서버가 없는 과제이므로 데모 목록을 기준으로 중복을 확인합니다.");
+      setAvailabilityStatus("서버가 없는 정적 데모이므로 예시 목록을 기준으로 중복을 확인합니다.");
       return;
     }
 

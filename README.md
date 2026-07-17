@@ -144,15 +144,33 @@ Bootstrap, Tailwind CSS, React, Vue, jQuery 등의 외부 UI 프레임워크나 
 
 ## 미디어 출처 및 라이선스
 
-아래 플랫폼과 라이선스는 프로젝트 초기 자료에 제공된 정보 기준입니다. 현재 저장소와 Git 기록에서는 실제 작성자와 원본 페이지 URL을 확인할 수 없습니다.
+프로젝트에 사용한 이미지, 오디오와 영상은 각 플랫폼의 공식 다운로드 파일을 프로젝트 내부에 로컬 파일로 저장해 사용했습니다.
+출처 표기가 필수인지와 관계없이 자료의 원작자와 출처를 명확히 기록하기 위해 아래 정보를 포함합니다.
 
-- `trip-main.jpg`: Pexels / 작성자·원본 URL 확인 필요 / Pexels License
-- `trip-food.jpg`: Pexels / 작성자·원본 URL 확인 필요 / Pexels License
-- `trip-view.jpg`: Pexels / 작성자·원본 URL 확인 필요 / Pexels License
-- `trip-sound.mp3`: Pixabay / 작성자·원본 URL 확인 필요 / Pixabay Content License
-- `trip-video.mp4`: Pexels / 작성자·원본 URL 확인 필요 / Pexels License
+- `trip-main.jpg`:
+  [Stunning Coastal Cliffs in Jeju, South Korea](https://www.pexels.com/photo/stunning-coastal-cliffs-in-jeju-south-korea-28525306/)
+  — Jakob Jin,
+  [Pexels License](https://www.pexels.com/license/)
 
-공개 전에 각 파일의 작성자, 원본 URL, 사용 권한과 적용 라이선스를 다시 확인해야 합니다.
+- `trip-food.jpg`:
+  [Tangerines on Tree](https://www.pexels.com/photo/tangerines-on-tree-24403633/)
+  — Nadiye Odabaşı,
+  [Pexels License](https://www.pexels.com/license/)
+
+- `trip-view.jpg`:
+  [Scenic Coastal View of Jeju Island in South Korea](https://www.pexels.com/photo/scenic-coastal-view-of-jeju-island-in-south-korea-30966651/)
+  — Coman Yu,
+  [Pexels License](https://www.pexels.com/license/)
+
+- `trip-sound.mp3`:
+  [Gentle Ocean Shore Waves](https://pixabay.com/sound-effects/nature-gentle-ocean-shore-waves-499665/)
+  — DRAGON-STUDIO,
+  [Pixabay Content License](https://pixabay.com/service/license-summary/)
+
+- `trip-video.mp4`:
+  [Scenic Ocean Shoreline with Rocky Coastline](https://www.pexels.com/video/scenic-ocean-shoreline-with-rocky-coastline-37208144/)
+  — Nicholaus Choi,
+  [Pexels License](https://www.pexels.com/license/)
 
 ## 구현 특징
 
